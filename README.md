@@ -18,6 +18,7 @@
  - React Query Hydration을 활용한 SSR + CSR 하이브리드 패턴 (index, 상세페이지)
  - 스크롤 위치 및 브라우저 사이즈에 따른 조건부 UI 랜더링 (index)
  - 검색 전용 페이지를 분리하지 않고, React Query의 queryKey 변경을 통해 동일한 목록 뷰에서 검색 결과를 처리
+ - generateMetadata를 활용한 페이지 단위 동적 SEO 메타데이터 구성
 
 ## 주요 특징 
  - 반응형 웹

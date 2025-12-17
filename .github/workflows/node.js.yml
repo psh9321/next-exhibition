@@ -29,7 +29,7 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm test -- --coverage
+      - run: pnpm test --coverage
 
       - name: Upload coverage & logs (on failure)
         if: failure()
