@@ -1,0 +1,9 @@
+@font-face {
+    font-family: "logo";
+    src: url("/font/logo.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "basic";
+    src: url("/font/basic.ttf") format("truetype");
+}
