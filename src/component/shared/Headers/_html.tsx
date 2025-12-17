@@ -67,7 +67,6 @@ export const Container = styled.div`
     position : absolute;
     top : 90px;
     right : 20px;
-    // transform : scale(0);
     display : block;
     width : 450px;
     padding :0 20px 50px;
@@ -86,5 +85,9 @@ export const Container = styled.div`
         border-style: solid;
         border-width: 20px;
         border-color: transparent transparent #444444 transparent;
+    }
+
+    @media all and (max-width : 499px) {
+        width : calc(100% - 10px);
     }
 `
