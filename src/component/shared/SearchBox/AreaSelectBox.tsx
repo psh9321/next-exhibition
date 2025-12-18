@@ -44,7 +44,7 @@ export const AreaSelectBox = () => {
     const params = new URLSearchParams(searchParams.toString());
 
     function ValidateCallback(value : string) { 
-
+        if(value === "지역전체" && currentValue === "") return
         if(value === currentValue) return
         
         SetCurrentValue(value as DISTRICT);

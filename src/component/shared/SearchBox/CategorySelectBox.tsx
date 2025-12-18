@@ -42,6 +42,7 @@ export const CategorySelectBox = () => {
 
     function ValidateCallback(value : string) { 
 
+        if(value === "A" && currentValue === "") return
         if(value === currentValue) return
          
         SetCurrentValue(value as EXHIBITION_CATEGORY);
