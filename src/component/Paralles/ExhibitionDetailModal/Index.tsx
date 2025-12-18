@@ -88,7 +88,6 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
         FadeInOutScaleAnimation<HTMLElement>(section, "in", 200);
 
     },[])
-    
     return (
         <Wrapper onClick={WrapperCloseCallback}>
             <Section ref={sectionRef}>
@@ -115,12 +114,11 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
                     </Dl>
                     <Article>
                         <h2 className="hidden"></h2>
-                    
                         <ImgBox>
                             <Image
                                 width={300}
                                 height={400}
-                                src={imgUrl}
+                                src={imgUrl || "/img404.png"}
                                 alt={`${decode(title)}, 장소 : ${place}, 날짜 : ${exhibitionDate}`}
                                 unoptimized
                                 onError={ImageError}
