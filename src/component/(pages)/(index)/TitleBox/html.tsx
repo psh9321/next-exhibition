@@ -21,9 +21,11 @@ export const Aside = styled.aside`
 `
 
 export const Div = styled.div`
-    display : block;
+    display : flex;
+    flex-direction : column;
+    justify-content : space-between;
     width : 700px;
-    // height : 277px;
+    height : 261px;
     margin : 40px auto 0;
 
     @media all and (max-width : 700px) {

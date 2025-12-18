@@ -69,7 +69,7 @@ export const Container = styled.div`
     right : 20px;
     display : block;
     width : 450px;
-    padding :0 20px 50px;
+    padding :30px 20px 50px;
     background-color : #444444;
     border-radius : 20px;
     transform 0.35s ease, opacity 0.35s ease;
@@ -89,5 +89,6 @@ export const Container = styled.div`
 
     @media all and (max-width : 499px) {
         width : calc(100% - 10px);
+        padding-bottom : 30px;
     }
 `

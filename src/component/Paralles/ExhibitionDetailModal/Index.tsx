@@ -32,7 +32,6 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
     const queryClient = useQueryClient();
 
     const sectionRef = useRef<HTMLElement>(null);
-
     
     const { loadingStatus, setLoadingStatus } = useLoadingStore(useShallow(state => ({
         loadingStatus : state.loadingStatus,
@@ -82,18 +81,12 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
 
         if(!sectionRef["current"]) return 
         
-        // document.body.style.overflow = "hidden";
-
         if(loadingStatus) setLoadingStatus("");
 
         const section = sectionRef["current"];
 
         FadeInOutScaleAnimation<HTMLElement>(section, "in", 200);
-        
 
-        return () => {
-            // document.body.style.overflow = ""
-        }
     },[])
     
     return (
