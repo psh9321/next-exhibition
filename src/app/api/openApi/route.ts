@@ -16,7 +16,7 @@ export async function POST(req : NextRequest) {
             PageNo : String(offset),
             numOfrows : String(limit),
             serviceTp : type as string,
-            sortStdr : String(sortNum),
+            // sortStdr : String(sortNum),
         } as OPEN_API_QUERY_DATA
 
         if(searchKeyword) resultParams["keyword"] = searchKeyword;

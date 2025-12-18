@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { setInterval } from "timers";
 
-import { ScanSearch } from 'lucide-react';
+import { ScanSearch, Route } from 'lucide-react';
 import { useShallow } from "zustand/shallow";
 
 import { Portal } from "@/component/shared/Portal/Index";
@@ -94,4 +94,23 @@ export const SearchLoadingElement = () => {
             </LoadingIcon>
         </Portal>
     )
+}
+
+export const RouteLoadingElement = () => {
+
+    const { loadingStatus } = useLoadingStore(useShallow(state => ({
+        loadingStatus : state.loadingStatus
+    })));
+
+    if(loadingStatus !== "route") return <></>;
+
+    return (
+        <Portal>
+            <LoadingIcon className={"search"}>
+                <SearchContents>
+                    <Route/>로딩중
+                </SearchContents>
+            </LoadingIcon>
+        </Portal>
+    )   
 }

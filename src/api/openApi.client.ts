@@ -8,7 +8,6 @@ export async function API_EXHIBITION_LIST_CLIENT({
     offset = 1,
     limit = 24,
     type = "A",
-    sortNum = 1,
     ...rest
 } : CLIENT_EXHIBITION_API_PARAMS){
     try {
@@ -18,7 +17,6 @@ export async function API_EXHIBITION_LIST_CLIENT({
                 offset,
                 limit,
                 type,
-                sortNum,
                 ...rest
             })
         })

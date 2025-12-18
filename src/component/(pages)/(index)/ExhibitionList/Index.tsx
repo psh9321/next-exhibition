@@ -14,7 +14,7 @@ import { useShallow } from "zustand/shallow"
 
 import { SearchAlert } from 'lucide-react';
 
-import { FetchLoadingElement } from "@/component/shared/Loading/Index";
+import { FetchLoadingElement, RouteLoadingElement } from "@/component/shared/Loading/Index";
 
 import { useInterSectionObserver } from "@/hook/useInterSectionObserver"
 import { useLoadingStore } from "@/store/useLoadingStore";
@@ -142,7 +142,13 @@ export const ExhibitionList = () => {
 
                             return (
                                 <li key={`${title}-${i}`}>
-                                    <Link scroll={false} href={`/exhibition/${seq}?${GetQueryString()}`}>
+                                    <Link 
+                                        scroll={false} 
+                                        href={`/exhibition/${seq}?${GetQueryString()}`}
+                                        onClick={() => {
+                                            setLoadingStatus("route")
+                                        }}
+                                    >
                                         <Image 
                                             width={205} 
                                             height={220} 
@@ -171,6 +177,7 @@ export const ExhibitionList = () => {
                 <li ref={ref} style={{height : "1px"}}></li>
             </Ul>
             
+            <RouteLoadingElement/>
             <FetchLoadingElement/>
             
         </Section>

@@ -11,11 +11,14 @@ import { useQueryClient } from "@tanstack/react-query";
 
 import { Wrapper, Section, Div, Article, ImgBox, Dl, BtnList, ExhibitionContents } from "./_html";
 
+import { useLoadingStore } from "@/store/useLoadingStore";
+
 import { ExhibitionDateFormat } from "@/util/dateFormat";
 import { ImageError } from "@/util/imgError";
 import { FadeInOutScaleAnimation } from "@/util/Animation";
 
 import { EXHIBITION_DETAIL_ITEM } from "@/types/exhibition";
+import { useShallow } from "zustand/shallow";
 
 interface EXHIBITION_DETAIL_VIEW_MODAL {
     seq : string
@@ -28,6 +31,12 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
     const queryClient = useQueryClient();
 
     const sectionRef = useRef<HTMLElement>(null);
+
+    
+    const { loadingStatus, setLoadingStatus } = useLoadingStore(useShallow(state => ({
+        loadingStatus : state.loadingStatus,
+        setLoadingStatus : state.SetLoadingStatus
+    })));
 
     const queryData = queryClient.getQueryData([process["env"]["NEXT_PUBLIC_QUERY_KEY_EXHIBITION"], seq]) as EXHIBITION_DETAIL_ITEM;
 
@@ -73,6 +82,8 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
         if(!sectionRef["current"]) return 
         
         document.body.style.overflow = "hidden";
+
+        if(loadingStatus) setLoadingStatus("");
 
         const section = sectionRef["current"];
 
