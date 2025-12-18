@@ -27,13 +27,10 @@ export const LoadingIcon = ({ children, className } : LOADING_ICON) => {
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     useEffect(() => {
-
         if(!parentRef["current"]) return
         if(!animationRef["current"]) return 
 
         const element = animationRef["current"];
-
-        document.body.style.overflow = "hidden";
 
         parentRef["current"].classList.add("on");
 
@@ -47,7 +44,6 @@ export const LoadingIcon = ({ children, className } : LOADING_ICON) => {
         }, 250);
 
         return () => {
-            document.body.style.overflow = "";
             if(intervalRef["current"]) clearInterval(intervalRef["current"]);
         }
     },[]);

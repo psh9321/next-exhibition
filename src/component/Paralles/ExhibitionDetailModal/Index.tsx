@@ -15,7 +15,8 @@ import { useLoadingStore } from "@/store/useLoadingStore";
 
 import { ExhibitionDateFormat } from "@/util/dateFormat";
 import { ImageError } from "@/util/imgError";
-import { FadeInOutScaleAnimation } from "@/util/Animation";
+import { FadeInOutScaleAnimation } from "@/util/animation";
+import { BodyScrollLock } from "@/util/bodyScrollLock";
 
 import { EXHIBITION_DETAIL_ITEM } from "@/types/exhibition";
 import { useShallow } from "zustand/shallow";
@@ -48,6 +49,8 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
         if(!sectionRef["current"]) return 
 
         FadeInOutScaleAnimation<HTMLElement>(sectionRef["current"], "out", 200, () => {
+            
+            if(document.body.style.overflow === "hidden") BodyScrollLock(false);
             navigation.back();
         });
      }
@@ -59,8 +62,6 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
     }
 
     function OnShareKaKaoCallback() {
-        // if (!window.Kakao?.isInitialized()) return console.log("---");
-
         window.Kakao.Share.sendDefault({
             objectType: "feed",
             content: {
@@ -81,7 +82,7 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
 
         if(!sectionRef["current"]) return 
         
-        document.body.style.overflow = "hidden";
+        // document.body.style.overflow = "hidden";
 
         if(loadingStatus) setLoadingStatus("");
 
@@ -91,7 +92,7 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
         
 
         return () => {
-            document.body.style.overflow = ""
+            // document.body.style.overflow = ""
         }
     },[])
     

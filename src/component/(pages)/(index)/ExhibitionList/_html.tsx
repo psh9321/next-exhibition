@@ -70,6 +70,23 @@ export const Ul = styled.ul`
 
 `
 
+export const Div = styled.div`
+    position : relative;
+    width : 205px;
+    height : 220px;
+    border-radius : 10px 10px 0 0;
+
+    @media all and (max-width : 880px) {
+        width : 100%;
+        heigth : auto;
+    }
+
+    @media all and (max-width : 640px) {
+        width : auto;
+        height: 50vw;
+    }
+`
+
 export const Dl = styled.dl`
     position :relative;
     display : block;

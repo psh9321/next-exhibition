@@ -23,10 +23,11 @@ import { OPEN_API_CLIENT_RESPONSE_DATA, EXHIBITION_ITEM, EXHIBITION_API_RESPONSE
 
 import { ExhibitionDateFormat } from "@/util/dateFormat";
 import { ImageError } from "@/util/imgError";
+import { BodyScrollLock } from "@/util/bodyScrollLock";
 
 import { API_EXHIBITION_LIST_CLIENT } from "@/api/openApi.client";
 
-import { Section, Ul, Dl, Empty } from "./_html";
+import { Section, Ul, Dl, Empty, Div } from "./_html";
 
 export const ExhibitionList = () => {
 
@@ -60,6 +61,8 @@ export const ExhibitionList = () => {
         }
     });
 
+    if(!data) return <></>
+
     const { ref, isView } = useInterSectionObserver<HTMLLIElement>({
         threshold : 0
     });
@@ -68,13 +71,12 @@ export const ExhibitionList = () => {
         setLoadingStatus : state.SetLoadingStatus
     })));
 
-    if(!data) return <></>
-
     const isEmpty = data.pages[0]?.total as number <= 0;
 
     async function Setup({ pageParam } : QueryFunctionContext){
 
         setLoadingStatus("fetch");
+        BodyScrollLock(true);
 
         const queryStrArr = [...searchParams.entries()];
         
@@ -92,6 +94,7 @@ export const ExhibitionList = () => {
         .then(rs => {
 
             setLoadingStatus("");
+            BodyScrollLock(false);
 
             const result = rs as EXHIBITION_API_RESPONSE
                    
@@ -99,6 +102,8 @@ export const ExhibitionList = () => {
         })
         .catch(err => {
             setLoadingStatus("");
+            BodyScrollLock(false);
+
             console.log("setup err", err)
         })
     }
@@ -139,25 +144,28 @@ export const ExhibitionList = () => {
                             const { thumbnail, title, place, area, startDate, endDate,seq } = el as EXHIBITION_ITEM; 
                             
                             const exhibitionDate = (String(startDate) && String(endDate)) ? `${ExhibitionDateFormat(startDate)} ~ ${ExhibitionDateFormat(endDate)}` : "";
-
+                            
                             return (
                                 <li key={`${title}-${i}`}>
                                     <Link 
                                         scroll={false} 
                                         href={`/exhibition/${seq}?${GetQueryString()}`}
                                         onClick={() => {
-                                            setLoadingStatus("route")
+                                            setLoadingStatus("route");
+                                            BodyScrollLock(true);
                                         }}
                                     >
-                                        <Image 
-                                            width={205} 
-                                            height={220} 
-                                            src={thumbnail} 
-                                            alt={`${decode(title)}, 장소 : ${place}, 날짜 : ${exhibitionDate}`} 
-                                            unoptimized
-                                            onError={ImageError}
-                                            loading="eager"
-                                        />
+                                        <Div>
+                                            <Image 
+                                                fill
+                                                sizes="100vw"
+                                                src={thumbnail} 
+                                                alt={`${decode(title)}, 장소 : ${place}, 날짜 : ${exhibitionDate}`} 
+                                                unoptimized
+                                                onError={ImageError}
+                                                loading="eager"
+                                            />
+                                        </Div>
                                         <Dl>
                                             <dt className="title">{decode(title)}</dt>
                                             <dd className="place">{place}</dd>

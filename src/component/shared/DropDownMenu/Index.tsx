@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { Article, Button, Container, Ul } from "./_html";
 
-import { DISTRICT } from "@/types/exhibition"
+import { BodyScrollLock } from "@/util/bodyScrollLock";
 
 const directionOpts = {
     가로 : "horizontal",
@@ -70,8 +70,8 @@ export const DropDownMenu = ({ data, defaultValue, hiddenText, direction, valida
         if(!btnRef["current"]) return 
         if(!menuRef["current"]) return 
 
-        document.body.style.overflow = isVisible ? "hidden" : "";
-
+        BodyScrollLock(isVisible);
+        
         const menuList = menuRef["current"];
         
         if(isVisible) {
