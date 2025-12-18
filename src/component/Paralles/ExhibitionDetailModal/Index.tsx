@@ -15,7 +15,7 @@ import { useLoadingStore } from "@/store/useLoadingStore";
 
 import { ExhibitionDateFormat } from "@/util/dateFormat";
 import { ImageError } from "@/util/imgError";
-import { FadeInOutScaleAnimation } from "@/util/animation";
+import { FadeInOutScaleAnimation } from "@/util/fadeInOutScaleAnimation";
 import { BodyScrollLock } from "@/util/bodyScrollLock";
 
 import { EXHIBITION_DETAIL_ITEM } from "@/types/exhibition";
