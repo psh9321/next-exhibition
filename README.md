@@ -1,6 +1,7 @@
 #Discover Exhibitions
 
 ## 전시정보를 제공하는 사이트 입니다.
+https://next-exhibition.vercel.app/
 
 ## 개발 환경
  - node@20.18.3

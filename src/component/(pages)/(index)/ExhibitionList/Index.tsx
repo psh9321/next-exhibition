@@ -119,7 +119,7 @@ export const ExhibitionList = () => {
         if(isView) fetchNextPage();
         
     },[isView]);
-
+    
     return (
         <Section>
             <h2 className="hidden">전시 목록</h2>
