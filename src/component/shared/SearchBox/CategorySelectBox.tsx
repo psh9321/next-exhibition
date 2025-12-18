@@ -2,14 +2,16 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import { useEffect, useState } from 'react';
+
 import { useShallow } from "zustand/shallow"
+
 import { useSearchStatusStore } from '@/store/useSearchStatusStore';
 import { DropDownMenu } from '../DropDownMenu/Index';
 
 import { EXHIBITION_CATEGORY } from "@/types/exhibition"
 import { SearchLoadingElement } from '../Loading/Index';
 import { useLoadingStore } from '@/store/useLoadingStore';
-import { useEffect } from 'react';
 
 const categoryData = [ 
     { key : "공연/전시", value : "A"},
@@ -19,9 +21,13 @@ const categoryData = [
 
 export const CategorySelectBox = () => {
 
+    const key = "searchCategory";
+
     const router = useRouter();
 
     const searchParams = useSearchParams();
+
+    const [ currentValue, SetCurrentValue ] = useState<EXHIBITION_CATEGORY | string>(searchParams.get(key)??"");
 
     const { setCategory } = useSearchStatusStore(useShallow((state) => ({
         setCategory : state.SetCategory
@@ -34,12 +40,11 @@ export const CategorySelectBox = () => {
 
     const params = new URLSearchParams(searchParams.toString());
 
-    const key = "searchCategory";
-
     function ValidateCallback(value : string) { 
 
-        if(value === searchParams.get(key)) return
+        if(value === currentValue) return
          
+        SetCurrentValue(value as EXHIBITION_CATEGORY);
         setCategory(value as EXHIBITION_CATEGORY); 
 
         if(value === "A") {
@@ -57,13 +62,15 @@ export const CategorySelectBox = () => {
 
     useEffect(() => {
         if(loadingStatus) setLoadingStatus("");
-    },[searchParams]);
+    },[searchParams, currentValue]);
+
+    const defaultValue = categoryData.find(el => el["value"] === currentValue)?.["value"] ?? categoryData[0]["value"];
 
     return (
         <>
             <SearchLoadingElement/>
             
-            <DropDownMenu hiddenText='카테고리 선택' defaultValue={categoryData[0]["value"]} data={categoryData} validata={ValidateCallback}/>        
+            <DropDownMenu hiddenText='카테고리 선택' defaultValue={defaultValue} data={categoryData} validata={ValidateCallback}/>        
         </>
     );
 };

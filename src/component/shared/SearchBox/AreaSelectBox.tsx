@@ -2,7 +2,10 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import { useEffect, useState } from 'react'
+
 import { useShallow } from "zustand/shallow"
+
 import { useSearchStatusStore } from '@/store/useSearchStatusStore';
 
 import { DropDownMenu } from '../DropDownMenu/Index';
@@ -10,7 +13,6 @@ import { DropDownMenu } from '../DropDownMenu/Index';
 import { DISTRICT } from "@/types/exhibition"
 import { useLoadingStore } from '@/store/useLoadingStore';
 import { SearchLoadingElement } from '../Loading/Index';
-import { useEffect } from 'react';
 
 const areaData = [
     "지역 전체","서울", "경기", "세종", "대전", "대구", "부산", "광주", "제주", "강원", "경남", "경북", "울산", "인천", "전남", "전북", "충남", "충북"
@@ -21,9 +23,13 @@ const areaData = [
 
 export const AreaSelectBox = () => {
 
+    const key = "searchArea";
+
     const router = useRouter();
 
     const searchParams = useSearchParams();
+
+    const [ currentValue, SetCurrentValue ] = useState<DISTRICT | string>(searchParams.get(key)??"");
 
     const { area, setArea } = useSearchStatusStore(useShallow((state) => ({
         area : state.area,
@@ -37,12 +43,11 @@ export const AreaSelectBox = () => {
 
     const params = new URLSearchParams(searchParams.toString());
 
-    const key = "searchArea";
-
     function ValidateCallback(value : string) { 
 
-        if(value === searchParams.get(key)) return
+        if(value === currentValue) return
         
+        SetCurrentValue(value as DISTRICT);
         setArea(value as DISTRICT);
 
         if(value === "지역전체") params.delete(key);    
@@ -56,7 +61,7 @@ export const AreaSelectBox = () => {
 
     useEffect(() => {
         if(loadingStatus) setLoadingStatus("");
-    },[searchParams]);
+    },[searchParams, currentValue]);
     
     return (
         <>
