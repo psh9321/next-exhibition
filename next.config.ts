@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: false,
+  productionBrowserSourceMaps : process["env"]["NODE_ENV"] === "production",
   images : {
     remotePatterns : [
       {
@@ -13,7 +14,8 @@ const nextConfig: NextConfig = {
     ]
   },
   compiler : {
-    styledComponents : true
+    styledComponents : true,
+    removeConsole : process["env"]["NODE_ENV"] === "production",
   }
 };
 

@@ -1,8 +1,8 @@
 import { CLIENT_API } from "./_api.call.module";
 
-import { DataDecrypt, DataEncrypt } from "@/util/crypto";
-
 import { CLIENT_EXHIBITION_API_PARAMS, EXHIBITION_API_RESPONSE } from "@/types/exhibition"
+import { ThrowModel } from "@/util/throwModel";
+import { RESPONSE_MODEL } from "@/types/response";
 
 export async function API_EXHIBITION_LIST_CLIENT({
     offset = 1,
@@ -12,20 +12,22 @@ export async function API_EXHIBITION_LIST_CLIENT({
 } : CLIENT_EXHIBITION_API_PARAMS){
     try {
         
-        const result = await CLIENT_API("openApi", {
-            json : DataEncrypt({
+        const api = await CLIENT_API("openApi", {
+            json : {
                 offset,
                 limit,
                 type,
                 ...rest
-            })
-        })
-        .json<EXHIBITION_API_RESPONSE>();
-        
-        return DataDecrypt(result)
+            }
+        });
+
+        const result = await api.json();
+
+        if(!api.ok) throw result;
+
+        return result as EXHIBITION_API_RESPONSE
     }
     catch(err) {
-        console.log("client error",err)
-        return err
+        throw ThrowModel(err as RESPONSE_MODEL<Error>)
     }
 }

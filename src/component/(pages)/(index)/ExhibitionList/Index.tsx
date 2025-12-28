@@ -62,8 +62,6 @@ export const ExhibitionList = () => {
         }
     });
 
-    if(!data) return <></>
-
     const { ref, isView } = useInterSectionObserver<HTMLLIElement>({
         threshold : 0
     });
@@ -72,7 +70,7 @@ export const ExhibitionList = () => {
         setLoadingStatus : state.SetLoadingStatus
     })));
 
-    const isEmpty = data.pages[0]?.total as number <= 0;
+    const isEmpty = data?.pages[0]?.total as number <= 0;
 
     async function Setup({ pageParam } : QueryFunctionContext){
 
@@ -93,6 +91,8 @@ export const ExhibitionList = () => {
         
         return API_EXHIBITION_LIST_CLIENT(param as CLIENT_EXHIBITION_API_PARAMS)
         .then(rs => {
+
+            // if(rs["resultCode"] !== 200) return []
 
             setLoadingStatus("");
             BodyScrollLock(false);
@@ -120,6 +120,8 @@ export const ExhibitionList = () => {
         if(isView) fetchNextPage();
         
     },[isView]);
+
+    console.log("data",data)
     
     return (
         <Section>

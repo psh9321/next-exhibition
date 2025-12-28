@@ -11,9 +11,8 @@ function IsRESPONSE_MODEL<T>(data: RESPONSE_MODEL<T> | Error): data is RESPONSE_
 }
   
 export function ThrowModel<T>(data: Error | RESPONSE_MODEL<T>) {
-    if (IsRESPONSE_MODEL<T>(data)) {
-      return data;
-    }
+    
+  if (IsRESPONSE_MODEL<T>(data)) return data;
   
     return {
       resultCode: 500,
