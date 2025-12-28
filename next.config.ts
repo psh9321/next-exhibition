@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   images : {
     remotePatterns : [
       {
-        protocol : "http",
+        protocol : "https",
         hostname : "www.culture.go.kr",
         pathname: '/upload/**',
       }
