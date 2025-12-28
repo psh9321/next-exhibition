@@ -17,6 +17,7 @@ import { ExhibitionDateFormat } from "@/util/dateFormat";
 import { ImageError } from "@/util/imgError";
 import { FadeInOutScaleAnimation } from "@/util/fadeInOutScaleAnimation";
 import { BodyScrollLock } from "@/util/bodyScrollLock";
+import { SrcHttpToHttps } from "@/util/srcHttpToHttps";
 
 import { EXHIBITION_DETAIL_ITEM } from "@/types/exhibition";
 import { useShallow } from "zustand/shallow";
@@ -118,8 +119,8 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
                             <Image
                                 width={300}
                                 height={400}
-                                src={imgUrl || "/img404.png"}
-                                alt={`${decode(title)}, 장소 : ${place}, 날짜 : ${exhibitionDate}`}
+                                src={SrcHttpToHttps(imgUrl) || "/img404.png"}
+                                alt={`${decode(title)} 썸네일 이미지`}
                                 unoptimized
                                 onError={ImageError}
                             />

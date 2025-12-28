@@ -24,6 +24,7 @@ import { OPEN_API_CLIENT_RESPONSE_DATA, EXHIBITION_ITEM, EXHIBITION_API_RESPONSE
 import { ExhibitionDateFormat } from "@/util/dateFormat";
 import { ImageError } from "@/util/imgError";
 import { BodyScrollLock } from "@/util/bodyScrollLock";
+import { SrcHttpToHttps } from "@/util/srcHttpToHttps";
 
 import { API_EXHIBITION_LIST_CLIENT } from "@/api/openApi.client";
 
@@ -159,8 +160,8 @@ export const ExhibitionList = () => {
                                             <Image 
                                                 fill
                                                 sizes="100vw"
-                                                src={thumbnail} 
-                                                alt={`${decode(title)}, 장소 : ${place}, 날짜 : ${exhibitionDate}`} 
+                                                src={SrcHttpToHttps(thumbnail)} 
+                                                alt={`${decode(title)} 썸네일 이미지`} 
                                                 unoptimized
                                                 onError={ImageError}
                                                 loading="eager"
