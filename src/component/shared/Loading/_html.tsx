@@ -18,9 +18,10 @@ export const Inner = styled.div`
     bottom: -100%;
     left: 50%;
     transform: translateX(-50%);
-    display: block;
-    width: 150px;
-    height: 80px;
+    display : inline-block;
+    width : 150px;
+    height : 90px;
+    text-align : center;
     background-color: #091257;
     border-radius: 20px;
     transition: 0.25s ease;
@@ -31,9 +32,9 @@ export const Inner = styled.div`
     }
 `
 
-export const SearchContents = styled.div`
+export const P = styled.p`
     position: absolute;
-    top: 10px;
+    top: 15px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -51,18 +52,13 @@ export const SearchContents = styled.div`
 `
 
 export const Span = styled.span`
-    position : absolute;
-    top : 10px;
-    left : 50%;
-    transform : translate(-50%, -50%);
-    width: 1.2ch;
+    position : relative;
+    transform : translateY(5px);
+    display : inline-block;
+    width : 3ch;
+    height : 100%;
     color : #fff;
-    font-size : 130px;
+    font-size : 70px;
     border-radius : 100%;
     padding : 10px;    
-
-    &.search {
-        top: 40px ;
-        font-size: 70px !important;
-    }
 `

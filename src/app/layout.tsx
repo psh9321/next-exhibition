@@ -27,7 +27,7 @@ export default function RootLayout({ children }: LAYOUT_CHILD) {
   
   return (
     <html lang="ko">
-      <body>
+      <body cz-shortcut-listen="true">
 
       <KakaoInitializer/>
 

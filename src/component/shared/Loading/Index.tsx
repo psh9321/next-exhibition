@@ -1,24 +1,24 @@
 'use client'
 
-import { useEffect, useRef } from "react";
+import { CSSProperties, useEffect, useRef } from "react";
 import { setInterval } from "timers";
 
-import { ScanSearch, Route } from 'lucide-react';
+import { ScanSearch, Route, Scroll } from 'lucide-react';
 import { useShallow } from "zustand/shallow";
 
 import { Portal } from "@/component/shared/Portal/Index";
 
 import { useLoadingStore } from "@/store/useLoadingStore";
 
-import { Wrapper, Inner, SearchContents, Span } from "./_html";
+import { Wrapper, Inner, P, Span } from "./_html";
 
 import { LAYOUT_CHILD } from "@/types/component"
 
 interface LOADING_ICON extends LAYOUT_CHILD {
-    className? : string
+    style? : CSSProperties
 }
 
-export const LoadingIcon = ({ children, className } : LOADING_ICON) => {
+export const LoadingIcon = ({ children, style } : LOADING_ICON) => {
 
     const parentRef = useRef<HTMLParagraphElement>(null);
 
@@ -36,8 +36,8 @@ export const LoadingIcon = ({ children, className } : LOADING_ICON) => {
 
         const timer = setTimeout(() => {
             intervalRef["current"] = setInterval(() => {
-                if(element.textContent && element.textContent.length >= 3) element.textContent=""
-                element.textContent+="."
+                if(element.textContent && element.textContent.length >= 3) element.innerHTML=""
+                element.append(".")
             }, 250);
 
             clearTimeout(timer);
@@ -49,10 +49,10 @@ export const LoadingIcon = ({ children, className } : LOADING_ICON) => {
     },[]);
 
     return (
-        <Wrapper className={className??""}>
-            <Inner ref={parentRef}>
-                {children}
-                <Span className={className??""} ref={animationRef}>.</Span>
+        <Wrapper>
+            <Inner ref={parentRef} style={style}>
+                <P>{children}</P>
+                <Span ref={animationRef}>.</Span>
             </Inner>
         </Wrapper>
     );
@@ -68,7 +68,12 @@ export const FetchLoadingElement = () => {
 
     return (
         <Portal>
-            <LoadingIcon/>
+            <LoadingIcon style={{
+                width : "300px"
+            }}>
+                <Scroll/>
+                전시정보 불러오는 중
+            </LoadingIcon>
         </Portal>
     )
 }
@@ -83,10 +88,8 @@ export const SearchLoadingElement = () => {
 
     return (
         <Portal>
-            <LoadingIcon className={"search"}>
-                <SearchContents>
-                    <ScanSearch/>검색중
-                </SearchContents>
+            <LoadingIcon>
+                <ScanSearch/>검색중
             </LoadingIcon>
         </Portal>
     )
@@ -102,10 +105,8 @@ export const RouteLoadingElement = () => {
 
     return (
         <Portal>
-            <LoadingIcon className={"search"}>
-                <SearchContents>
-                    <Route/>로딩중
-                </SearchContents>
+            <LoadingIcon>
+                <Route/>로딩중
             </LoadingIcon>
         </Portal>
     )   
