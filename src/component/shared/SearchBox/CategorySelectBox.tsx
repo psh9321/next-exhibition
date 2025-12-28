@@ -54,16 +54,12 @@ export const CategorySelectBox = () => {
         else {
             params.set(key, value); 
         }
-
-        setLoadingStatus("search");
         
+        setLoadingStatus("search");
+
         router.replace(`?${params.toString()}`,{ scroll : false });
         
     };
-
-    useEffect(() => {
-        if(loadingStatus) setLoadingStatus("");
-    },[searchParams, currentValue]);
 
     const defaultValue = categoryData.find(el => el["value"] === currentValue)?.["value"] ?? categoryData[0]["value"];
 

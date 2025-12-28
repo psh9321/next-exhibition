@@ -59,10 +59,6 @@ export const AreaSelectBox = () => {
         
     };
 
-    useEffect(() => {
-        if(loadingStatus) setLoadingStatus("");
-    },[searchParams, currentValue]);
-    
     return (
         <>
             <SearchLoadingElement/>
