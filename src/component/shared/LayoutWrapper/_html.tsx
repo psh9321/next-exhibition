@@ -19,6 +19,9 @@ export const Main = styled.main`
         width : 100%;
         height : 100%;
         background-image: url("/background.png");   
+        background-position :center;
+        background-size : cover;
+        background-repeat : no-repeat;
         z-index : -1;
     }
 `
