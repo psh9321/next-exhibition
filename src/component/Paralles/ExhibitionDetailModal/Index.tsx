@@ -66,11 +66,11 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
                 title : decode(queryData?.title),
                 description: `장소 : ${queryData?.place} \n 날짜 : ${ExhibitionDateFormat(queryData?.startDate)}~${ExhibitionDateFormat(queryData?.endDate)} \n ${queryData?.contents1??""}`,
                 imageUrl: queryData?.imgUrl,
-                link: {
-                    mobileWebUrl: `https://next-exhibition.vercel.app/exhibition/${seq}`,
-                    webUrl: `https://next-exhibition.vercel.app/exhibition/${seq}`,
+                link : {
+                    webUrl : window.location.href,
+                    mobileWebUrl : window.location.href
                 }
-            }
+            },
         });
     };
 
