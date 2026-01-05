@@ -66,11 +66,11 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
             objectType: "feed",
             content: {
                 title : decode(title),
-                description: `장소 : ${place} | 날짜 : ${ExhibitionDateFormat(startDate)}~${ExhibitionDateFormat(endDate)} ${contents1??""}`,
+                description: `장소 : ${place} \n 날짜 : ${ExhibitionDateFormat(startDate)}~${ExhibitionDateFormat(endDate)} \n ${contents1??""}`,
                 imageUrl: imgUrl,
                 link: {
-                    mobileWebUrl: window.location.href,
-                    webUrl: window.location.href,
+                    mobileWebUrl: `https://next-exhibition.vercel.app/exhibition/${seq}`,
+                    webUrl: `https://next-exhibition.vercel.app/exhibition/${seq}`,
                 },
             },
         });
