@@ -18,10 +18,12 @@ export const Wrapper = styled.div`
 `
 
 export const Section = styled.section`
+    container-type: inline-size;
     position : relative;
     display : block;
     max-width : 750px;
     max-height : 800px;
+    width : 100%;
     padding : 20px;
     background-image: url("/modalBackground.png"); 
     border : 1px solid #000;
