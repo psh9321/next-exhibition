@@ -49,7 +49,8 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
         FadeInOutScaleAnimation<HTMLElement>(sectionRef["current"], "out", 200, () => {
             
             if(document.body.style.overflow === "hidden") BodyScrollLock(false);
-            navigation.back();
+
+            window.history.length > 1 ? navigation.back() : navigation.push("/");
         });
      }
 
@@ -60,15 +61,20 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
     }
 
     function OnShareKaKaoCallback() {
+
+        const origin = process["env"]["NEXT_PUBLIC_DOMAIN"] as string;
+
+        const resultUrl = `${origin}/exhibition/${seq}`;
+
         window.Kakao.Share.sendDefault({
             objectType: "feed",
             content: {
                 title : decode(queryData?.title),
-                description: `장소 : ${queryData?.place} \n 날짜 : ${ExhibitionDateFormat(queryData?.startDate)}~${ExhibitionDateFormat(queryData?.endDate)} \n ${queryData?.contents1??""}`,
+                description: `장소 : ${queryData?.place}\n날짜 : ${ExhibitionDateFormat(queryData?.startDate)}~${ExhibitionDateFormat(queryData?.endDate)}\n${queryData?.contents1??""}`,
                 imageUrl: queryData?.imgUrl,
                 link : {
-                    webUrl : window.location.href,
-                    mobileWebUrl : window.location.href
+                    webUrl : resultUrl,
+                    mobileWebUrl : resultUrl
                 }
             },
         });
