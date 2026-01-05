@@ -20,7 +20,7 @@ interface LOADING_ICON extends LAYOUT_CHILD {
 
 export const LoadingIcon = ({ children, style } : LOADING_ICON) => {
 
-    const parentRef = useRef<HTMLParagraphElement>(null);
+    const parentRef = useRef<HTMLDivElement>(null);
 
     const animationRef = useRef<HTMLSpanElement>(null);
 
@@ -32,8 +32,6 @@ export const LoadingIcon = ({ children, style } : LOADING_ICON) => {
 
         const element = animationRef["current"];
 
-        parentRef["current"].classList.add("on");
-
         const timer = setTimeout(() => {
             intervalRef["current"] = setInterval(() => {
                 if(element.textContent && element.textContent.length >= 3) element.innerHTML=""
@@ -43,6 +41,10 @@ export const LoadingIcon = ({ children, style } : LOADING_ICON) => {
             clearTimeout(timer);
         }, 250);
 
+        const parentElement = parentRef["current"];
+
+        parentElement.style.bottom = visualViewport ? `${window.innerHeight - visualViewport["height"] + 50}px` : "50px";
+         
         return () => {
             if(intervalRef["current"]) clearInterval(intervalRef["current"]);
         }

@@ -121,8 +121,6 @@ export const ExhibitionList = () => {
         
     },[isView]);
 
-    console.log("data",data)
-    
     return (
         <Section>
             <h2 className="hidden">전시 목록</h2>

@@ -26,10 +26,6 @@ export const Inner = styled.div`
     border-radius: 20px;
     transition: 0.25s ease;
     box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.8);
-
-    &.on {
-        bottom : 50px;
-    }
 `
 
 export const P = styled.p`
