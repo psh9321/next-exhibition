@@ -70,10 +70,6 @@ export const ExhibitionDetailModal = ({ seq } : EXHIBITION_DETAIL_VIEW_MODAL) =>
                     mobileWebUrl: `https://next-exhibition.vercel.app/exhibition/${seq}`,
                     webUrl: `https://next-exhibition.vercel.app/exhibition/${seq}`,
                 }
-            },
-            link : {
-                mobileWebUrl: `https://next-exhibition.vercel.app/exhibition/${seq}`,
-                webUrl: `https://next-exhibition.vercel.app/exhibition/${seq}`,
             }
         });
     };
