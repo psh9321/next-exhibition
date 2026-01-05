@@ -37,6 +37,7 @@ export const Div = styled.div`
 export const Dl = styled.dl`
     display : inline-block;
     line-height : 1.5;
+    margin-bottom : 20px;
     color : #fff;
     
     dt { font-size : 2.4rem; font-family : "logo" }
