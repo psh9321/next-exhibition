@@ -1,14 +1,10 @@
 import "./reset.css"
 import "./font.css"
 
-
-import { LAYOUT_CHILD } from "@/types/component"
-
-import { StyledComponentsRegistry } from "@/component/shared/StyledComponentsRegistry/Index";
-import { LayoutWrapper } from "@/component/shared/LayoutWrapper/Index";
-import QueryProvider from "@/component/shared/Provider/QueryProvider/Index";
-import { KakaoInitializer } from "@/component/script/KakaoInitializer";
-
+import { StyledComponentsRegistry } from "@/Provider/StyledComponentsRegistry";
+import { LayoutWrapper } from "@/shared/ui/LayoutWrapper";
+import QueryProvider from "@/Provider/QueryProvider";
+import { KakaoInitializer } from "@/script/KakaoInitializer";
 
 export const metadata = {
   metadataBase: new URL("https://example.com"),
@@ -22,6 +18,7 @@ export const metadata = {
     type: "website",
   },
 };
+
 export default function RootLayout({ children }: LAYOUT_CHILD) {
 
   

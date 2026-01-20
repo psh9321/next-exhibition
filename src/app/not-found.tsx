@@ -1,4 +1,4 @@
-import { EmptyPage } from "@/component/shared/EmptyPage/Index";
+import { EmptyPage } from "@/shared/ui/EmptyPage";
 
 const NotFound = () => <EmptyPage/>;
 

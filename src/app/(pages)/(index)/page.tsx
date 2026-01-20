@@ -1,8 +1,6 @@
 import { QueryClient, dehydrate, HydrationBoundary } from "@tanstack/react-query"
 
-import { OPEN_API_CLIENT_RESPONSE_DATA, EXHIBITION_API_RESPONSE, SEARCH_PARAMS, DISTRICT, EXHIBITION_CATEGORY } from "@/types/exhibition"
-
-import { API_EXHIBITION_LIST_SERVER } from "@/api/openApi.server"
+import { API_EXHIBITION_LIST_SERVER } from "@/entities/exhibition/list/api/exhibition.list.server"
 
 import IndexPageView from "./_view";
 
@@ -46,13 +44,11 @@ const IndexPageServer = async ({ searchParams } : SEARCH_RESULT_INTERFACE) => {
     if(searchKeyword) queryKeyObj["searchKeyword"] = searchKeyword;
     if(searchCategory) queryKeyObj["searchCategory"] = searchCategory;
 
-    // const queryKey = decodeURIComponent(new URLSearchParams(queryKeyObj).toString());
-
     await queryServer.prefetchInfiniteQuery({
         queryKey : [process["env"]["NEXT_PUBLIC_QUERY_KEY_EXHIBITION"],"list", queryKeyObj],
         queryFn : async ({pageParam}) => {
 
-            const params : SEARCH_PARAMS = {
+            const params : OPEN_API_QUERY_DATA = {
                 PageNo : String(pageParam),
                 numOfrows : "24",
                 serviceTp : "A",        
@@ -62,9 +58,9 @@ const IndexPageServer = async ({ searchParams } : SEARCH_RESULT_INTERFACE) => {
             if(searchKeyword) params["keyword"] = searchKeyword;
             if(searchCategory) params["serviceTp"] = searchCategory;
 
-            const result = await API_EXHIBITION_LIST_SERVER(params) as EXHIBITION_API_RESPONSE;
+            const result = await API_EXHIBITION_LIST_SERVER(params);
 
-            return result["data"]
+            return result
         },
         initialPageParam: 1,
         getNextPageParam : (lastPage : OPEN_API_CLIENT_RESPONSE_DATA | null) => {

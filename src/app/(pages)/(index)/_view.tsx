@@ -1,13 +1,13 @@
 "use client"
 
-import { TitleBox } from "@/component/(pages)/(index)/TitleBox/Index";
-import { ExhibitionList } from "@/component/(pages)/(index)/ExhibitionList/Index";
+import { TitleOrHeader } from "@/widgets/TitleOrHeader";
+import { ExhibitionList } from "@/widgets/ExhibitionList";
 
 const IndexPageView = () => {
 
     return (
         <>
-            <TitleBox/>
+            <TitleOrHeader/>
             <ExhibitionList/>
         </>
     );

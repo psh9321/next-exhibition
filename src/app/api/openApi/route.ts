@@ -1,13 +1,14 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 
-import { API_EXHIBITION_LIST_SERVER } from '@/api/openApi.server'
+import { API_EXHIBITION_LIST_SERVER } from '@/entities/exhibition/list/api/exhibition.list.server'
 
-import { DataDecrypt, DataEncrypt } from '@/util/compression';
+import { DataDecrypt, DataEncrypt } from '@/shared/lib/compression';
 
-import { CLIENT_EXHIBITION_API_PARAMS, OPEN_API_QUERY_DATA , DISTRICT, EXHIBITION_API_RESPONSE} from "@/types/exhibition"
-import { ThrowModel } from '@/util/throwModel';
+import { ApiSuccess, ApiError, ApiFail } from '@/shared/model/response';
 
+
+const isProdiction = process["env"]["NODE_ENV"] === "production";
 
 export async function POST(req : NextRequest) {
     try {
@@ -29,19 +30,20 @@ export async function POST(req : NextRequest) {
         if(searchArea) resultParams["sido"] = searchArea as DISTRICT;
         if(searchCategory) resultParams["serviceTp"] = searchCategory;
 
-        const { resultCode, data, errMsg } = await API_EXHIBITION_LIST_SERVER(resultParams) as EXHIBITION_API_RESPONSE;
+        const data = await API_EXHIBITION_LIST_SERVER(resultParams);
 
-        const result = DataEncrypt(JSON.stringify({ resultCode, data, errMsg }))
+        const responeModel = data ? new ApiSuccess(data) : new ApiFail(resultParams, "전시 목록 불러오기 통신 실패");
+
+        const result = DataEncrypt(JSON.stringify(responeModel))
 
         return new NextResponse(result, { status : 200 });  
+        
     }
     catch(err) {
+        const errorResponse = new ApiError(err, "전시 목록 불러오기 통신 에러");
 
-
-        const errorResponse = JSON.stringify(ThrowModel(err as Error));
-
-        const result = process["env"]["NODE_ENV"] === "production" ? DataEncrypt(errorResponse) : errorResponse;
-        
+        const result = DataEncrypt(JSON.stringify(errorResponse));
+         
         return new NextResponse(result, {status : 500});
     }
 }

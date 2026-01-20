@@ -2,8 +2,6 @@
 
 import { ReactNode } from "react";
 
-import { LAYOUT_CHILD } from "@/types/component"
-
 interface ROOT_LAYOUT extends LAYOUT_CHILD {
     parallel : ReactNode,
 }

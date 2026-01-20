@@ -1,3 +1,7 @@
-export interface DETAIL_PAGE_SERVER {
-    params : Promise<PARAMS>
+declare global {
+    interface DETAIL_PAGE_SERVER {
+        params: Promise<PARAMS>;
+    }
 }
+
+export {};

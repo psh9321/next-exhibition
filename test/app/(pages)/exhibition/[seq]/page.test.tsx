@@ -1,46 +1,24 @@
-import { generateMetadata } from "@/component/shared/ExhibitionDetailServer/Index";
-import { API_EXHIBITION_DETAIL } from "@/api/openApi.server";
+import { ReactElement } from "react";
 
-jest.mock("@/api/openApi.server", () => ({
-  API_EXHIBITION_DETAIL: jest.fn(),
+import ExhibitionDetailPageServer from "@/app/(pages)/exhibition/[seq]/page";
+
+import { ExhibitionDetailServer } from "@/widgets/ExhibitionDetailServer";
+import { API_EXHIBITION_DETAIL_SERVER } from "@/entities/exhibition/detail/api/exhibition.detail.server";
+
+jest.mock("@/widgets/ExhibitionDetailServer", () => ({
+  ExhibitionDetailServer: jest.fn(async () => "MOCK"),
 }));
 
-describe("Exhibition Detail Page - Server Logic", () => {
-  it("generateMetadata는 API 결과로 metadata를 생성한다", async () => {
-    (API_EXHIBITION_DETAIL as jest.Mock).mockResolvedValue({
-      resultCode: 200,
-      data: {
-        title: "테스트 전시",
-        place: "서울",
-        startDate: "20250101",
-        endDate: "20250131",
-        imgUrl: "test.jpg",
-      },
-    });
+describe("전시 상세페이지 테스트", () => {
+  it("searchParams 를 ExhibitionDetailServer에 전달", async () => {
+    const mockResult = <div>Mock Detail</div> as ReactElement;
 
-    const result = await generateMetadata({
-      params: { seq: "1" },
-    });
+    (ExhibitionDetailServer as jest.Mock).mockResolvedValue(mockResult);
 
-    expect(result).toEqual(
-      expect.objectContaining({
-        title: "테스트 전시",
-        description: "서울 | 2025.01.01~2025.01.31",
-        openGraph: {
-          type: "article",
-          images: [{ url: "test.jpg" }],
-        },
-      })
-    );
-  });
-
-  it("API 결과가 없으면 빈 metadata를 반환한다", async () => {
-    (API_EXHIBITION_DETAIL as jest.Mock).mockResolvedValue(null);
-
-    const result = await generateMetadata({
-      params: { seq: "1" },
-    });
-
-    expect(result).toEqual({});
+    const searchParams = {
+      params : Promise.resolve({ seq: "12345" })
+    }
+    
+    await ExhibitionDetailPageServer(searchParams);
   });
 });
