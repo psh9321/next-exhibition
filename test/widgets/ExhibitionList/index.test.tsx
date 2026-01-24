@@ -46,6 +46,7 @@ jest.mock("@/entities/exhibition/list/ui/ExhibitionItem", () => ({
 
 jest.mock("@/shared/ui/Loading", () => ({
   FetchLoadingElement: () => <div data-testid="fetch-loading">LOADING</div>,
+  RouteLoadingElement : () => <div data-testid="route-loading">LOADING</div>,
 }));
 
 // styled wrappers (의미 없음 → 단순 태그로 대체)
