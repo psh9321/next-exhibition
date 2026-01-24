@@ -40,7 +40,6 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
     function CloseCallback() { 
         if(!sectionRef["current"]) return 
 
-        console.log("99")
         SetLoadingStatus("route");
 
         FadeInOutScaleAnimation<HTMLElement>(sectionRef["current"], "out", 200, () => {
@@ -94,7 +93,7 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
                     }
                 </Section>
             </Wrapper>
-            
+
             <FetchLoadingElement/>
         </>
     )
