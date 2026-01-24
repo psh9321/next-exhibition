@@ -20,7 +20,7 @@ import { useLoadingStore } from "@/shared/store/useLoadingStore";
 import { FadeInOutScaleAnimation } from "@/shared/lib/fadeInOutScaleAnimation";
 import { BodyScrollLock } from "@/shared/lib/bodyScrollLock";
 import { EmptyPage } from "@/shared/ui/EmptyPage";
-import { FetchLoadingElement } from "@/shared/ui/Loading";
+import { RouteLoadingElement } from "@/shared/ui/Loading";
 
 export const DetailWrapper = ({ seq } : {seq : string }) => {
 
@@ -66,6 +66,10 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
 
         FadeInOutScaleAnimation<HTMLElement>(section, "in", 200);
 
+        return () => {
+            if(loadingStatus) SetLoadingStatus("");
+        }
+
     },[]);
 
     return (
@@ -94,7 +98,7 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
                 </Section>
             </Wrapper>
 
-            <FetchLoadingElement/>
+            <RouteLoadingElement/>
         </>
     )
 }
