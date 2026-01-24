@@ -20,6 +20,7 @@ import { useLoadingStore } from "@/shared/store/useLoadingStore";
 import { FadeInOutScaleAnimation } from "@/shared/lib/fadeInOutScaleAnimation";
 import { BodyScrollLock } from "@/shared/lib/bodyScrollLock";
 import { EmptyPage } from "@/shared/ui/EmptyPage";
+import { FetchLoadingElement } from "@/shared/ui/Loading";
 
 export const DetailWrapper = ({ seq } : {seq : string }) => {
 
@@ -29,15 +30,18 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
 
     const sectionRef = useRef<HTMLElement>(null);
 
-    const { loadingStatus, setLoadingStatus } = useLoadingStore(useShallow(state => ({
+    const { loadingStatus, SetLoadingStatus } = useLoadingStore(useShallow(state => ({
         loadingStatus : state.loadingStatus,
-        setLoadingStatus : state.SetLoadingStatus
+        SetLoadingStatus : state.SetLoadingStatus
     })));
 
     const queryData = queryClient.getQueryData([process["env"]["NEXT_PUBLIC_QUERY_KEY_EXHIBITION"], seq]) as EXHIBITION_DETAIL_ITEM;
 
     function CloseCallback() { 
         if(!sectionRef["current"]) return 
+
+        console.log("99")
+        SetLoadingStatus("route");
 
         FadeInOutScaleAnimation<HTMLElement>(sectionRef["current"], "out", 200, () => {
             
@@ -53,12 +57,11 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
         if(e.target === e.currentTarget) CloseCallback();
     }
 
-
     useEffect(() => {
 
         if(!sectionRef["current"]) return 
         
-        if(loadingStatus) setLoadingStatus("");
+        if(loadingStatus) SetLoadingStatus("");
 
         const section = sectionRef["current"];
 
@@ -67,28 +70,32 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
     },[]);
 
     return (
-        <Wrapper onClick={WrapperCloseCallback}>
-            <Section ref={sectionRef}>
-                {
-                    queryData ? 
-                    <Div>
-                        <Ul>
-                            <li>
-                                <ExhibitionShare item={queryData} />
-                            </li>
-                            <li>
-                                <button title={`"${decode(queryData["title"])}" 상세페이지 닫기 및 뒤로가기`} onClick={CloseCallback}>
-                                    <CopyX/>
-                                </button>
-                            </li>
-                        </Ul>
-                        <DetailHead item={queryData} />
-                        <DetailContents item={queryData} />
-                    </Div>                    
-                    :
-                    <EmptyPage closeCallback={CloseCallback}/>
-                }
-            </Section>
-        </Wrapper>
+        <>
+            <Wrapper onClick={WrapperCloseCallback}>
+                <Section ref={sectionRef}>
+                    {
+                        queryData ? 
+                        <Div>
+                            <Ul>
+                                <li>
+                                    <ExhibitionShare item={queryData} />
+                                </li>
+                                <li>
+                                    <button title={`"${decode(queryData["title"])}" 상세페이지 닫기 및 뒤로가기`} onClick={CloseCallback}>
+                                        <CopyX/>
+                                    </button>
+                                </li>
+                            </Ul>
+                            <DetailHead item={queryData} />
+                            <DetailContents item={queryData} />
+                        </Div>                    
+                        :
+                        <EmptyPage closeCallback={CloseCallback}/>
+                    }
+                </Section>
+            </Wrapper>
+            
+            <FetchLoadingElement/>
+        </>
     )
 }

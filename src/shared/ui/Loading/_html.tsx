@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
     display : block;
     width : 100%;
     height : 100%;
-    z-index : 3;
+    z-index : 9999;
 `
 
 export const Inner = styled.div`
