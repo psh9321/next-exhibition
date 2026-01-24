@@ -34,11 +34,18 @@ export const ExhibitionItem = ({ item }: { item: EXHIBITION_ITEM }) => {
 
     const { thumbnail, title, place, area, startDate, endDate, seq } = item;
 
-    const exhibitionDate = (String(startDate) && String(endDate)) ? `${ExhibitionDateFormat(startDate)} ~ ${ExhibitionDateFormat(endDate)}` : "";
+    const exhibitionDate =
+        String(startDate) && String(endDate)
+            ? `${ExhibitionDateFormat(startDate)} ~ ${ExhibitionDateFormat(endDate)}`
+            : "";
 
     return (
         <Li>
-            <Link scroll={false} onClick={AnchorCallback} href={`/exhibition/${seq}`}>
+            <Link
+                scroll={false}
+                onClick={AnchorCallback}
+                href={`/exhibition/${seq}`}
+            >
                 <Div>
                     <Image
                         fill
@@ -59,8 +66,6 @@ export const ExhibitionItem = ({ item }: { item: EXHIBITION_ITEM }) => {
                     </dd>
                 </Dl>
             </Link>
-
-            <RouteLoadingElement/>
         </Li>
     );
 };

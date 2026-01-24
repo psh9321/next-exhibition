@@ -14,7 +14,7 @@ import { BodyScrollLock } from "@/shared/lib/bodyScrollLock";
 
 import { EmptyItem } from "@/entities/exhibition/list/ui/EmptyItem";
 import { ExhibitionItem } from "@/entities/exhibition/list/ui/ExhibitionItem";
-import { FetchLoadingElement } from "@/shared/ui/Loading";
+import { FetchLoadingElement, RouteLoadingElement } from "@/shared/ui/Loading";
 
 export const ExhibitionList = () => {
 
@@ -118,6 +118,7 @@ export const ExhibitionList = () => {
             </Ul>        
 
             <FetchLoadingElement/>
+            <RouteLoadingElement/>
         </Article>
     )
 }
