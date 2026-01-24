@@ -2,7 +2,7 @@ declare global {
     interface RESPONSE_MODEL<T> {
         resultCode: number; /** number */
         data: T | null; /** object | string | null */
-        errMsg?: string; /** string */
+        errMsg: string; /** string */
     }
 
     interface OPEN_API_CLIENT_RESPONSE_DATA {
@@ -16,9 +16,7 @@ declare global {
         totalCount: string;
         PageNo: string | number;
         numOfrows: string;
-        items: {
-            item: EXHIBITION_ITEM[];
-        };
+        items: { item: EXHIBITION_ITEM[] };
     }
 
     interface OPEN_API_QUERY_DATA {
@@ -35,13 +33,9 @@ declare global {
         keyword?: string; /** 검색 키워드 */
     }
 
-    type EXHIBITION_API_RESPONSE =
-        RESPONSE_MODEL<OPEN_API_CLIENT_RESPONSE_DATA>;
+    type EXHIBITION_API_RESPONSE = RESPONSE_MODEL<OPEN_API_CLIENT_RESPONSE_DATA>;
 
-    type EXHIBITION_API_DETAIL_RESPONSE =
-        RESPONSE_MODEL<EXHIBITION_DETAIL_ITEM>;
-
-    // type SEARCH_PARAMS = OPEN_API_QUERY_DATA;
+    type EXHIBITION_API_DETAIL_RESPONSE = RESPONSE_MODEL<EXHIBITION_DETAIL_ITEM>;
 }
 
 export {};

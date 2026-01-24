@@ -2,15 +2,16 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useShallow } from "zustand/shallow"
 
-import { useSearchStatusStore } from '@/features/ExhibitionSearch/store/useSearchStatusStore';
-import { DropDownMenu } from '../../../shared/ui/DropDownMenu';
+import { DropDownMenu } from '@/shared/ui/DropDownMenu';
+import { SearchLoadingElement } from '@/shared/ui/Loading';
 
-import { SearchLoadingElement } from '../../../shared/ui/Loading';
 import { useLoadingStore } from '@/shared/store/useLoadingStore';
+
+const key = "searchCategory";
 
 const categoryData = [ 
     { key : "공연/전시", value : "A"},
@@ -19,20 +20,15 @@ const categoryData = [
 ];
 
 export const CategorySelectBox = () => {
-
-    const key = "searchCategory";
-
+    
     const router = useRouter();
 
     const searchParams = useSearchParams();
 
     const [ currentValue, SetCurrentValue ] = useState<EXHIBITION_CATEGORY | string>(searchParams.get(key)??"");
 
-    const { setCategory } = useSearchStatusStore(useShallow((state) => ({
-        setCategory : state.SetCategory
-    })));
-
-    const { setLoadingStatus } = useLoadingStore(useShallow(state => ({
+    const { loadingStatus, setLoadingStatus } = useLoadingStore(useShallow(state => ({
+        loadingStatus : state.loadingStatus,
         setLoadingStatus : state.SetLoadingStatus
     })));
 
@@ -44,7 +40,6 @@ export const CategorySelectBox = () => {
         if(value === currentValue) return
          
         SetCurrentValue(value as EXHIBITION_CATEGORY);
-        setCategory(value as EXHIBITION_CATEGORY); 
 
         if(value === "A") {
             if(params.has(key)) params.delete(key);
@@ -60,6 +55,10 @@ export const CategorySelectBox = () => {
     };
 
     const defaultValue = categoryData.find(el => el["value"] === currentValue)?.["value"] ?? categoryData[0]["value"];
+
+    useEffect(() => {
+        if(loadingStatus) setLoadingStatus("");
+    },[searchParams])
     
     return (
         <>

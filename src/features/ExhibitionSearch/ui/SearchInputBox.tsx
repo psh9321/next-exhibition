@@ -2,18 +2,18 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useShallow } from "zustand/shallow"
 
 import { Search } from 'lucide-react';
 
-import { useSearchStatusStore } from '@/features/ExhibitionSearch/store/useSearchStatusStore';
-
 import { Div, Input } from "./_html";
 
 import { useLoadingStore } from "@/shared/store/useLoadingStore";
 import { SearchLoadingElement } from '@/shared/ui/Loading';
+
+const key = "searchKeyword";
 
 export const SearchInputBox = () => {
 
@@ -21,27 +21,18 @@ export const SearchInputBox = () => {
 
     const searchParams = useSearchParams();
 
-    const { keyword, setKeyowrd } = useSearchStatusStore(useShallow((state) => ({
-        keyword : state.keyword,
-        setKeyowrd : state.SetKeyword,
-    })));
-
     const debounceTimer = useRef<NodeJS.Timeout | null>(null);
     
     const { loadingStatus, setLoadingStatus } = useLoadingStore(useShallow(state => ({
         loadingStatus : state.loadingStatus,
         setLoadingStatus : state.SetLoadingStatus
     })));
-    
-    const key = "searchKeyword";
 
     function OnInputCallback(e : React.InputEvent<HTMLInputElement>) {
 
         const value = e.currentTarget.value.replace(/ /g, '');
 
         if(value === searchParams.get(key)) return
-
-        setKeyowrd(value);
 
         if(debounceTimer["current"]) {
             clearTimeout(debounceTimer["current"]);
@@ -56,8 +47,10 @@ export const SearchInputBox = () => {
                 params.set(key, value);   
             }
             else {
-                if(params.has(key)) params.delete(key)
-                else return
+
+                if(!params.has(key)) return
+
+                params.delete(key);
             }
 
             setLoadingStatus("search")
@@ -67,7 +60,7 @@ export const SearchInputBox = () => {
     }
 
     useEffect(() => {
-        if(loadingStatus) setLoadingStatus("")
+        if(loadingStatus) setLoadingStatus("");
     },[searchParams])
 
     return (
@@ -76,7 +69,7 @@ export const SearchInputBox = () => {
             
             <Div>
                 <Search/>
-                <Input defaultValue={searchParams.get("searchKeyword")??keyword} type="text" placeholder="전시 제목, 장소 검색" onInput={OnInputCallback} />
+                <Input defaultValue={searchParams.get("searchKeyword")??""} type="text" placeholder="전시 제목, 장소 검색" onInput={OnInputCallback} />
             </Div>
         </>
         
