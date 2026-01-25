@@ -4,7 +4,6 @@ import { TitleOrHeader } from "@/widgets/TitleOrHeader";
 import { ExhibitionList } from "@/widgets/ExhibitionList";
 
 const IndexPageView = () => {
-
     return (
         <>
             <TitleOrHeader/>
