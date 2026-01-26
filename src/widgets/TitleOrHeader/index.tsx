@@ -3,12 +3,13 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+import { useMediaQuery } from "@parksuhyun9321/use-media-query";
+
 import { Div, Dl, Aside } from "./html";
 import { Headers } from "@/shared/ui/Headers";
 import { ExhibitionSearch } from "@/features/ExhibitionSearch/ui";
 
 import { useInterSectionObserver } from "@/shared/hook/useInterSectionObserver";
-import { useMediaQuery } from "@/shared/hook/useMediaQuery";
 
 const Contents = () => {
 
