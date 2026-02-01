@@ -1,7 +1,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 
-import { API_EXHIBITION_LIST_SERVER } from '@/entities/exhibition/list/api/exhibition.list.server'
+import { API_EXHIBITION_LIST_SERVER } from '@/entities/(index)/api/exhibition.list.server'
 
 import { DataDecrypt, DataEncrypt } from '@/shared/lib/compression';
 

@@ -11,9 +11,6 @@ import { ExhibitionSearch } from "@/features/ExhibitionSearch/ui";
 
 import { useInterSectionObserver } from "@/shared/hook/useInterSectionObserver";
 
-
-
-
 const Contents = () => {
 
     return (

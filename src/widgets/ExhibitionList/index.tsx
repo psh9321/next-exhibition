@@ -9,11 +9,11 @@ import { Article, Ul } from "./_html"
 import { useInterSectionObserver } from "@/shared/hook/useInterSectionObserver";
 import { useLoadingStore } from "@/shared/store/useLoadingStore";
 
-import { API_EXHIBITION_LIST_CLIENT } from "@/entities/exhibition/list/api/exhibition.list.client";
+import { API_EXHIBITION_LIST_CLIENT } from "@/entities/(index)/api/exhibition.list.client";
 import { BodyScrollLock } from "@/shared/lib/bodyScrollLock";
 
-import { EmptyItem } from "@/entities/exhibition/list/ui/EmptyItem";
-import { ExhibitionItem } from "@/entities/exhibition/list/ui/ExhibitionItem";
+import { EmptyItem } from "@/entities/(index)/ui/EmptyItem";
+import { ExhibitionItem } from "@/entities/(index)/ui/ExhibitionItem";
 import { FetchLoadingElement, RouteLoadingElement } from "@/shared/ui/Loading";
 
 export const ExhibitionList = () => {

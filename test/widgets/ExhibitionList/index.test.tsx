@@ -24,7 +24,7 @@ jest.mock("@/shared/store/useLoadingStore", () => ({
 }));
 
 // api
-jest.mock("@/entities/exhibition/list/api/exhibition.list.client", () => ({
+jest.mock("@/entities/(index)/api/exhibition.list.client", () => ({
   API_EXHIBITION_LIST_CLIENT: jest.fn(),
 }));
 
@@ -34,11 +34,11 @@ jest.mock("@/shared/lib/bodyScrollLock", () => ({
 }));
 
 // UI children (복잡한 내부 UI는 테스트 대상 아님 → 더미로 치환)
-jest.mock("@/entities/exhibition/list/ui/EmptyItem", () => ({
+jest.mock("@/entities/(index)/ui/EmptyItem", () => ({
   EmptyItem: () => <div data-testid="empty-item">EMPTY</div>,
 }));
 
-jest.mock("@/entities/exhibition/list/ui/ExhibitionItem", () => ({
+jest.mock("@/entities/(index)/ui/ExhibitionItem", () => ({
   ExhibitionItem: ({ item }: any) => (
     <li data-testid="exhibition-item">{item?.title}</li>
   ),
@@ -60,7 +60,7 @@ import { useSearchParams } from "next/navigation";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInterSectionObserver } from "@/shared/hook/useInterSectionObserver";
 import { useLoadingStore } from "@/shared/store/useLoadingStore";
-import { API_EXHIBITION_LIST_CLIENT } from "@/entities/exhibition/list/api/exhibition.list.client";
+import { API_EXHIBITION_LIST_CLIENT } from "@/entities/(index)/api/exhibition.list.client";
 import { BodyScrollLock } from "@/shared/lib/bodyScrollLock";
 import { ExhibitionList } from "@/widgets/ExhibitionList";
 

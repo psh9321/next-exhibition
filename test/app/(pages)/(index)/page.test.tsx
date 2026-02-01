@@ -1,7 +1,7 @@
 import IndexPageServer from "@/app/(pages)/(index)/page";
-import { API_EXHIBITION_LIST_SERVER } from "@/entities/exhibition/list/api/exhibition.list.server";
+import { API_EXHIBITION_LIST_SERVER } from "@/entities/(index)/api/exhibition.list.server";
 
-jest.mock("@/entities/exhibition/list/api/exhibition.list.server", () => ({
+jest.mock("@/entities/(index)/api/exhibition.list.server", () => ({
     API_EXHIBITION_LIST_SERVER: jest.fn(),
 }));
 
