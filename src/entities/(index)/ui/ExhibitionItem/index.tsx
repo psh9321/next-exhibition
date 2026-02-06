@@ -11,8 +11,6 @@ import { Li, Div, Dl } from "./_html";
 
 import { useLoadingStore } from "@/shared/store/useLoadingStore";
 
-import { RouteLoadingElement } from "@/shared/ui/Loading";
-
 import { SrcHttpToHttps } from "@/shared/lib/srcHttpToHttps";
 import { ImageError } from "@/shared/lib/imgError";
 import { ExhibitionDateFormat } from "@/shared/lib/dateFormat";

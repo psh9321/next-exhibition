@@ -18,7 +18,6 @@ export const Article = styled.article`
 
 export const Ul = styled.ul`
     display: flex;
-    justify-content : center;
     flex-wrap: wrap;
     gap: 20px;
     width: 100%;
