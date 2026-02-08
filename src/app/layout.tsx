@@ -9,6 +9,9 @@ import QueryProvider from "@/Provider/QueryProvider";
 import { KakaoInitializer } from "@/script/KakaoInitializer";
 
 export const metadata : Metadata = {
+  verification : {
+    google : "_0rSwIULAnx7U0YtIZE7xglEJZ6HC9jWxl57Uck9CZA"
+  },
   metadataBase: new URL("https://next-exhibition.vercel.app"),
   creator : "프론트엔드 개발자 박수현",
   publisher : "프론트엔드 개발자 박수현",
@@ -31,20 +34,20 @@ export const metadata : Metadata = {
   robots : {
     index : true,
     follow : true,
-    nocache : true,
-    noimageindex : true,
-    "max-video-preview" : -1,
-    "max-snippet" :  -1,
-    "max-image-preview" : "standard",
-    googleBot : {
-      index : true,
-      follow : true,
-      nocache : true,
-      noimageindex : true,
-      "max-video-preview" : -1,
-      "max-snippet" :  -1,
-      "max-image-preview" : "standard",
-    }
+    // nocache : true,
+    // noimageindex : true,
+    // "max-video-preview" : -1,
+    // "max-snippet" :  -1,
+    // "max-image-preview" : "standard",
+    // googleBot : {
+    //   index : true,
+    //   follow : true,
+    //   nocache : true,
+    //   noimageindex : true,
+    //   "max-video-preview" : -1,
+    //   "max-snippet" :  -1,
+    //   "max-image-preview" : "standard",
+    // }
   },
 };
 
