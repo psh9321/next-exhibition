@@ -1,5 +1,3 @@
-
-https://github.com/user-attachments/assets/4ebb07b7-7982-44be-be4f-8be74a048398
 #Discover Exhibitions
 
 ## 전시정보를 제공하는 사이트 입니다.
