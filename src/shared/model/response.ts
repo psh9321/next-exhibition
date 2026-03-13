@@ -23,7 +23,7 @@ export class ApiFail<T> extends ResponseModel<T> {
     constructor(data : any , msg : string) {
         super();
 
-        this.resultCode = 403;
+        this.resultCode = 400;
         this.data = data;
         this.errMsg = msg;
     }

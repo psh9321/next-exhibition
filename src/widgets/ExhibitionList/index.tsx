@@ -26,7 +26,7 @@ export const ExhibitionList = () => {
     if(searchParams.get("searchKeyword")) queryStringObj["searchKeyword"] = searchParams.get("searchKeyword") as string;
     if(searchParams.get("searchCategory")) queryStringObj["searchCategory"] = searchParams.get("searchCategory") as string;
     
-    const { data, fetchNextPage, isLoading } = useInfiniteQuery({
+    const { data, fetchNextPage, isLoading, isFetching } = useInfiniteQuery({
         queryKey: [process["env"]["NEXT_PUBLIC_QUERY_KEY_EXHIBITION"] as string, "list",queryStringObj],
         queryFn : Setup,
         initialPageParam: 1,
@@ -45,19 +45,15 @@ export const ExhibitionList = () => {
             return undefined
         }
     });
-
     const { ref, isView } = useInterSectionObserver<HTMLLIElement>({
         threshold : 0
     });
 
     const { SetLoadingStatus } = useLoadingStore(useShallow(state => ({
-        SetLoadingStatus : state.SetLoadingStatus
+        SetLoadingStatus : state.SetLoadingStatus,
     })));
 
     async function Setup({ pageParam } : QueryFunctionContext){
-
-        SetLoadingStatus("fetch");
-        BodyScrollLock(true);
 
         const queryStrArr = [...searchParams.entries()];
         
@@ -73,13 +69,21 @@ export const ExhibitionList = () => {
         
         const result = await API_EXHIBITION_LIST_CLIENT(param as CLIENT_EXHIBITION_API_PARAMS);
 
-        SetLoadingStatus("");
-        BodyScrollLock(false);
-
         return result??undefined
     }
 
     const isEmpty = data?.pages[0]?.total as number <= 0;
+
+    useEffect(() => {
+        if(isFetching) {
+            SetLoadingStatus("fetch");
+            BodyScrollLock(true);
+        }
+        else {
+            SetLoadingStatus("");
+            BodyScrollLock(false);
+        }
+    },[isFetching, SetLoadingStatus])
 
     useEffect(() => {
         if(isEmpty) return 
@@ -87,7 +91,7 @@ export const ExhibitionList = () => {
 
         if(isView) fetchNextPage();
         
-    },[isView]);
+    },[isEmpty, isLoading, isView, fetchNextPage]);
 
     return (
         <Article>

@@ -28,8 +28,7 @@ export const AreaSelectBox = () => {
 
     const [ currentValue, SetCurrentValue ] = useState<DISTRICT | string>(searchParams.get(key)??"");
 
-    const { loadingStatus, setLoadingStatus } = useLoadingStore(useShallow(state => ({
-        loadingStatus : state.loadingStatus,
+    const { setLoadingStatus } = useLoadingStore(useShallow(state => ({
         setLoadingStatus : state.SetLoadingStatus
     })));
 
@@ -45,15 +44,17 @@ export const AreaSelectBox = () => {
         if(value === "지역전체") params.delete(key);    
         else params.set(key, value); 
         
+        /** 검색 로딩뷰 활성화 */
         setLoadingStatus("search");
 
         router.replace(`?${params.toString()}`,{ scroll : false });
         
     };
 
+    /** 전역 로딩뷰 비활성화 */
     useEffect(() => {
-        if(loadingStatus) setLoadingStatus("");
-    },[searchParams])
+        setLoadingStatus("");
+    },[searchParams, setLoadingStatus])
 
     return (
         <>

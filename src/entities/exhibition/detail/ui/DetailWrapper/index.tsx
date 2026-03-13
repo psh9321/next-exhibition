@@ -30,9 +30,9 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
 
     const sectionRef = useRef<HTMLElement>(null);
 
-    const { loadingStatus, SetLoadingStatus } = useLoadingStore(useShallow(state => ({
-        loadingStatus : state.loadingStatus,
-        SetLoadingStatus : state.SetLoadingStatus
+    const { SetLoadingStatus, loadingState } = useLoadingStore(useShallow(state => ({
+        SetLoadingStatus : state.SetLoadingStatus,
+        loadingState : state.loadingStatus
     })));
 
     const queryData = queryClient.getQueryData([process["env"]["NEXT_PUBLIC_QUERY_KEY_EXHIBITION"], seq]) as EXHIBITION_DETAIL_ITEM;
@@ -51,26 +51,29 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
      }
 
     function WrapperCloseCallback(e : React.UIEvent) { 
+        e.preventDefault();
         e.stopPropagation();
 
         if(e.target === e.currentTarget) CloseCallback();
     }
 
+    /** 초기 애니메이션 실행 */
     useEffect(() => {
 
         if(!sectionRef["current"]) return 
         
-        if(loadingStatus) SetLoadingStatus("");
-
         const section = sectionRef["current"];
 
         FadeInOutScaleAnimation<HTMLElement>(section, "in", 200);
 
-        return () => {
-            if(loadingStatus) SetLoadingStatus("");
-        }
-
     },[]);
+
+    /** 라우트 로딩뷰 비활성화 */
+    useEffect(() => {
+        return () => {
+            if(loadingState) SetLoadingStatus("");
+        }
+    },[loadingState])
 
     return (
         <>

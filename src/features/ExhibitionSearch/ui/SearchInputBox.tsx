@@ -23,8 +23,7 @@ export const SearchInputBox = () => {
 
     const debounceTimer = useRef<NodeJS.Timeout | null>(null);
     
-    const { loadingStatus, setLoadingStatus } = useLoadingStore(useShallow(state => ({
-        loadingStatus : state.loadingStatus,
+    const { setLoadingStatus } = useLoadingStore(useShallow(state => ({
         setLoadingStatus : state.SetLoadingStatus
     })));
 
@@ -53,15 +52,17 @@ export const SearchInputBox = () => {
                 params.delete(key);
             }
 
+            /** 검색 로딩뷰 활성화 */
             setLoadingStatus("search")
 
             router.replace(`?${params.toString()}`,{ scroll : false });
         }, 500);
     }
 
+    /** 검색 로딩뷰 비활성화 */
     useEffect(() => {
-        if(loadingStatus) setLoadingStatus("");
-    },[searchParams])
+        setLoadingStatus("");
+    },[searchParams, setLoadingStatus])
 
     return (
         <>

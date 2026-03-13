@@ -5,7 +5,7 @@ import { API_EXHIBITION_LIST_SERVER } from "@/entities/(index)/api/exhibition.li
 import IndexPageView from "./_view";
 
 export const metadata = {
-    metadataBase: new URL("https://example.com"),
+    metadataBase: new URL("https://next-exhibition.vercel.app"),
     title: {
       default: "Discover Exhibitions",
       template: "%s | 전시 정보 플랫폼",

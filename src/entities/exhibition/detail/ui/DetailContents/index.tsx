@@ -12,6 +12,8 @@ import Image from "next/image";
 
 export const DetailContents = ({ item } : { item : EXHIBITION_DETAIL_ITEM }) => {
 
+    if(!item) return <></>
+
     return (
         <Article>
             <Div>
@@ -42,10 +44,7 @@ export const DetailContents = ({ item } : { item : EXHIBITION_DETAIL_ITEM }) => 
                         <dd className="price">{item["price"]}</dd>
                     )}
                 <dd className="category">
-                    {item["price"] === "무료" ||
-                        (item["price"] === "무료관람" && (
-                            <span>{item["price"]}</span>
-                        ))}
+                    {(item["price"] === "무료" || item["price"] === "무료관람") && <span>{item["price"]}</span>}
                     {item["realmName"] && (
                         <span>{item["realmName"]}</span>
                     )}

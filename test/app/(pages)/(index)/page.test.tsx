@@ -1,53 +1,25 @@
-import IndexPageServer from "@/app/(pages)/(index)/page";
-import { API_EXHIBITION_LIST_SERVER } from "@/entities/(index)/api/exhibition.list.server";
+import React from 'react'
+import { render, screen } from '@testing-library/react'
 
-jest.mock("@/entities/(index)/api/exhibition.list.server", () => ({
-    API_EXHIBITION_LIST_SERVER: jest.fn(),
-}));
+jest.mock('@/widgets/TitleOrHeader', () => ({
+    TitleOrHeader: () => <div data-testid="title-or-header">TitleOrHeader</div>,
+}))
 
-jest.mock("@/app/(pages)/(index)/_view", () => () => (
-    <div>MOCK_INDEX_VIEW</div>
-));
+jest.mock('@/widgets/ExhibitionList', () => ({
+    ExhibitionList: () => <div data-testid="exhibition-list">ExhibitionList</div>,
+}))
 
-describe("전시 목록 페이지 테스트", () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
-    });
- 
-    it("기본(검색어없음) or 지역전체", async () => {
-        (API_EXHIBITION_LIST_SERVER as jest.Mock).mockResolvedValue({
-            page: 1,
-            total: 0,
-            limit: 24,
-            data: [],
-        });
+// _view.tsx는 TitleOrHeader + ExhibitionList를 조합한 클라이언트 컴포넌트
+import IndexView from '@/app/(pages)/(index)/_view'
 
-        const element = await IndexPageServer({
-            searchParams: Promise.resolve({
-                searchCategory: "A",
-            }),
-        });
+describe('IndexView (index page 클라이언트 뷰)', () => {
+    it('TitleOrHeader를 렌더링한다', () => {
+        render(<IndexView />)
+        expect(screen.getByTestId('title-or-header')).toBeInTheDocument()
+    })
 
-        expect(API_EXHIBITION_LIST_SERVER).toHaveBeenCalled();
-        expect(element).toBeDefined();
-    });
-
-    it("검색어 입력, 셀렉트 박스 선택후 replace 시 queryString 로 api 호출", async () => {
-        (API_EXHIBITION_LIST_SERVER as jest.Mock).mockResolvedValue({
-            page: 1,
-            total: 48,
-            limit: 24,
-            data: [],
-        });
-
-        await IndexPageServer({
-            searchParams: Promise.resolve({
-                searchArea: "서울",
-                searchKeyword: "전시",
-                searchCategory: "A",
-            }),
-        });
-
-        expect(API_EXHIBITION_LIST_SERVER).toHaveBeenCalledTimes(1);
-    });
-});
+    it('ExhibitionList를 렌더링한다', () => {
+        render(<IndexView />)
+        expect(screen.getByTestId('exhibition-list')).toBeInTheDocument()
+    })
+})

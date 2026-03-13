@@ -22,7 +22,6 @@ export async function API_EXHIBITION_LIST_SERVER(searchParams : OPEN_API_QUERY_D
         if(OpenAPI_ServiceResponse) return null;
 
         if(!response) return null;
-        if(OpenAPI_ServiceResponse) return null;
 
         const openApiData = jsonData["response"]["body"] as OPEN_API_SERVER_RESPONSE_DATA;
 

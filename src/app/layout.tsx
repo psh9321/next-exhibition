@@ -34,20 +34,6 @@ export const metadata : Metadata = {
   robots : {
     index : true,
     follow : true,
-    // nocache : true,
-    // noimageindex : true,
-    // "max-video-preview" : -1,
-    // "max-snippet" :  -1,
-    // "max-image-preview" : "standard",
-    // googleBot : {
-    //   index : true,
-    //   follow : true,
-    //   nocache : true,
-    //   noimageindex : true,
-    //   "max-video-preview" : -1,
-    //   "max-snippet" :  -1,
-    //   "max-image-preview" : "standard",
-    // }
   },
 };
 

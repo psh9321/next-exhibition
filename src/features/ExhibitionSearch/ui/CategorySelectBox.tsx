@@ -27,8 +27,7 @@ export const CategorySelectBox = () => {
 
     const [ currentValue, SetCurrentValue ] = useState<EXHIBITION_CATEGORY | string>(searchParams.get(key)??"");
 
-    const { loadingStatus, setLoadingStatus } = useLoadingStore(useShallow(state => ({
-        loadingStatus : state.loadingStatus,
+    const { setLoadingStatus } = useLoadingStore(useShallow(state => ({
         setLoadingStatus : state.SetLoadingStatus
     })));
 
@@ -48,6 +47,7 @@ export const CategorySelectBox = () => {
             params.set(key, value); 
         }
         
+        /** 검색 로딩뷰 활성화 */
         setLoadingStatus("search");
 
         router.replace(`?${params.toString()}`,{ scroll : false });
@@ -56,9 +56,10 @@ export const CategorySelectBox = () => {
 
     const defaultValue = categoryData.find(el => el["value"] === currentValue)?.["value"] ?? categoryData[0]["value"];
 
+    /** 검색 로딩뷰 비활성화 */
     useEffect(() => {
-        if(loadingStatus) setLoadingStatus("");
-    },[searchParams])
+        setLoadingStatus("");
+    },[searchParams, setLoadingStatus])
     
     return (
         <>

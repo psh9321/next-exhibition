@@ -1,23 +1,17 @@
-import type { Config } from "jest";
+import type { Config } from 'jest'
+import nextJest from 'next/jest.js'
+
+const createJestConfig = nextJest({
+    dir: './',
+})
 
 const config: Config = {
-  testEnvironment: "jsdom",
+    testEnvironment: 'jsdom',
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+    testMatch: ['<rootDir>/test/**/*.test.{ts,tsx}'],
+    moduleNameMapper: {
+        '^@/(.*)$': '<rootDir>/src/$1',
+    },
+}
 
-  roots: ["<rootDir>/test"],
-
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-
-  moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1",
-  },
-
-  testMatch: [
-    "**/*.test.ts",
-    "**/*.test.tsx",
-  ],
-  transform: {
-    "^.+\\.(ts|tsx)$": ["babel-jest", { presets: ["next/babel"] }],
-  },
-};
-
-export default config;
+export default createJestConfig(config)
