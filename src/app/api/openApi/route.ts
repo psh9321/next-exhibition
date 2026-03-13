@@ -7,13 +7,10 @@ import { DataDecrypt, DataEncrypt } from '@/shared/lib/compression';
 
 import { ApiSuccess, ApiError, ApiFail } from '@/shared/model/response';
 
-
-const isProdiction = process["env"]["NODE_ENV"] === "production";
-
 export async function POST(req : NextRequest) {
     try {
 
-        const bodyParserCallback = process["env"]["NODE_ENV"] === "production" ? req.arrayBuffer : req.json
+        const bodyParserCallback = process.env.NODE_ENV === "production" ? req.arrayBuffer : req.json
 
         const {offset, limit, type, searchKeyword, searchArea, searchStartDate, searchEndDate, searchCategory } : CLIENT_EXHIBITION_API_PARAMS = DataDecrypt(await bodyParserCallback());
 

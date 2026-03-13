@@ -3,7 +3,7 @@ import pako from "pako"
  
 export function DataEncrypt(params : string){
 
-    if(process["env"]["NODE_ENV"] !== "production") return params
+    if(process.env.NODE_ENV !== "production") return params
 
     const uint8array = new TextEncoder().encode(params)
 
@@ -19,7 +19,7 @@ export function DataEncrypt(params : string){
  */
 export function DataDecrypt(params : ArrayBuffer){
 
-    if(process["env"]["NODE_ENV"] !== "production") return params
+    if(process.env.NODE_ENV !== "production") return params
 
     const uint8Array = pako.ungzip(params);
 

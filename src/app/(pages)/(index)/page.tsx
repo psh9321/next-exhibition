@@ -45,7 +45,7 @@ const IndexPageServer = async ({ searchParams } : SEARCH_RESULT_INTERFACE) => {
     if(searchCategory) queryKeyObj["searchCategory"] = searchCategory;
 
     await queryServer.prefetchInfiniteQuery({
-        queryKey : [process["env"]["NEXT_PUBLIC_QUERY_KEY_EXHIBITION"],"list", queryKeyObj],
+        queryKey : [process.env.NEXT_PUBLIC_QUERY_KEY_EXHIBITION,"list", queryKeyObj],
         queryFn : async ({pageParam}) => {
 
             const params : OPEN_API_QUERY_DATA = {

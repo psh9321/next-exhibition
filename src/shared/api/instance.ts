@@ -19,7 +19,7 @@ export const CLIENT_API = ky.create({
 
                 const headers = new Headers();
 
-                if(process["env"]["NODE_ENV"] === "production") {
+                if(process.env.NODE_ENV === "production") {
                     headers.set("Content-Type", "application/octet-stream")
                     headers.set("Content-Encoding", "gzip")
                 }
@@ -43,7 +43,7 @@ export const CLIENT_API = ky.create({
         afterResponse : [
             async ( request, options, response) => {
 
-                const bodyParser = process["env"]["NODE_ENV"] === "production" ? DataDecrypt(await response.arrayBuffer()) : await response.json();
+                const bodyParser = process.env.NODE_ENV === "production" ? DataDecrypt(await response.arrayBuffer()) : await response.json();
 
                 const result = JSON.stringify(bodyParser);
 
@@ -62,7 +62,7 @@ export const CLIENT_API = ky.create({
 })
 
 export const OPEN_API = ky.create({
-    prefixUrl : process["env"]["NEXT_EXHIBITION_API_URL"],
+    prefixUrl : process.env.NEXT_EXHIBITION_API_URL,
     timeout : false,
     credentials : "include",
     headers : {

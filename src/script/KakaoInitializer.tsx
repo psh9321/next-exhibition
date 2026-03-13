@@ -10,7 +10,7 @@ export const KakaoInitializer = () => {
         crossOrigin="anonymous"
         strategy="afterInteractive"
         onLoad={() => {
-          window.Kakao.init(process["env"]["NEXT_PUBLIC_KAKAO_KEY"] as string);
+          window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_KEY as string);
         }}
       ></Script>
     );

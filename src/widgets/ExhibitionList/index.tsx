@@ -27,7 +27,7 @@ export const ExhibitionList = () => {
     if(searchParams.get("searchCategory")) queryStringObj["searchCategory"] = searchParams.get("searchCategory") as string;
     
     const { data, fetchNextPage, isLoading, isFetching } = useInfiniteQuery({
-        queryKey: [process["env"]["NEXT_PUBLIC_QUERY_KEY_EXHIBITION"] as string, "list",queryStringObj],
+        queryKey: [process.env.NEXT_PUBLIC_QUERY_KEY_EXHIBITION as string, "list",queryStringObj],
         queryFn : Setup,
         initialPageParam: 1,
         getNextPageParam : (lastPage) => {

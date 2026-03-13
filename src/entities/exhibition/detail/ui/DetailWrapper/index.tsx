@@ -35,7 +35,7 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
         loadingState : state.loadingStatus
     })));
 
-    const queryData = queryClient.getQueryData([process["env"]["NEXT_PUBLIC_QUERY_KEY_EXHIBITION"], seq]) as EXHIBITION_DETAIL_ITEM;
+    const queryData = queryClient.getQueryData([process.env.NEXT_PUBLIC_QUERY_KEY_EXHIBITION, seq]) as EXHIBITION_DETAIL_ITEM;
 
     function CloseCallback() { 
         if(!sectionRef["current"]) return 

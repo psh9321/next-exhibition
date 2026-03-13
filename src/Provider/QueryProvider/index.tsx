@@ -23,7 +23,7 @@ const QueryProvider = ({ children }: LAYOUT_CHILD) => {
         <QueryClientProvider client={queryClient}>
             {children}
             <ReactQueryDevtools
-                initialIsOpen={process["env"]["NODE_ENV"] === "development"}
+                initialIsOpen={process.env.NODE_ENV === "development"}
             />
         </QueryClientProvider>
     );
