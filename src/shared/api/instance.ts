@@ -63,7 +63,7 @@ export const CLIENT_API = ky.create({
 
 export const OPEN_API = ky.create({
     prefixUrl : process.env.NEXT_EXHIBITION_API_URL,
-    timeout : false,
+    timeout : 100000,
     credentials : "include",
     headers : {
         Accept: 'application/xml',
