@@ -13,7 +13,7 @@ declare global {
     type EXHIBITION_CATEGORY = "A" | "B" | "C";
 
     interface EXHIBITION_ITEM {
-        serviceName: string; /** ex) 공연/전시 */
+        serviceName: string; /** 카테고리(서비스명) */
         seq: string; /** ex) 311142 */
         title: string; /** ex) 창작의 순간 - 예술가의 작업실 */
         startDate: string; /** ex) 20250214 */
@@ -25,7 +25,6 @@ declare global {
         gpsX: string; /** ex) 126.98010361777375 */
         gpsY: string; /** ex) 37.578627490528596 */
         sigungu: string; /** 시, 군, 구 */
-        serviceName: string; /** 카테고리(서비스명) */
     }
 
     interface EXHIBITION_DETAIL_ITEM extends EXHIBITION_ITEM {
