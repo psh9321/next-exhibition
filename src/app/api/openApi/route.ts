@@ -3,16 +3,14 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import { API_EXHIBITION_LIST_SERVER } from '@/entities/(index)/api/exhibition.list.server'
 
-import { DataDecrypt, DataEncrypt } from '@/shared/lib/compression';
+import { DataDeCompression, DataCompression } from '@/shared/lib/compression';
 
 import { ApiSuccess, ApiError, ApiFail } from '@/shared/model/response';
 
 export async function POST(req : NextRequest) {
     try {
 
-        const bodyParserCallback = process.env.NODE_ENV === "production" ? req.arrayBuffer : req.json
-
-        const {offset, limit, type, searchKeyword, searchArea, searchStartDate, searchEndDate, searchCategory } : CLIENT_EXHIBITION_API_PARAMS = DataDecrypt(await bodyParserCallback());
+        const {offset, limit, type, searchKeyword, searchArea, searchStartDate, searchEndDate, searchCategory } : CLIENT_EXHIBITION_API_PARAMS = DataDeCompression(process.env.NODE_ENV === "production" ? await req.arrayBuffer() : await req.json());
 
         const resultParams = {
             PageNo : String(offset),
@@ -31,7 +29,7 @@ export async function POST(req : NextRequest) {
 
         const responeModel = data ? new ApiSuccess(data) : new ApiFail(resultParams, "전시 목록 불러오기 통신 실패");
 
-        const result = DataEncrypt(JSON.stringify(responeModel))
+        const result = DataCompression(JSON.stringify(responeModel))
 
         return new NextResponse(result, { status : 200 });  
         
@@ -39,7 +37,7 @@ export async function POST(req : NextRequest) {
     catch(err) {
         const errorResponse = new ApiError(err, "전시 목록 불러오기 통신 에러");
 
-        const result = DataEncrypt(JSON.stringify(errorResponse));
+        const result = DataCompression(JSON.stringify(errorResponse));
          
         return new NextResponse(result, {status : 500});
     }

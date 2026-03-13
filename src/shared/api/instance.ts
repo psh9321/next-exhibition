@@ -1,6 +1,6 @@
 import ky, { type Options } from "ky";
 
-import { DataDecrypt, DataEncrypt } from "@/shared/lib/compression";
+import { DataDeCompression, DataCompression } from "@/shared/lib/compression";
 
 export const CLIENT_API = ky.create({
     
@@ -29,7 +29,7 @@ export const CLIENT_API = ky.create({
 
                 return new Request(req, {
                     headers,
-                    body : DataEncrypt(opt.body)
+                    body : DataCompression(opt.body)
                 })
             }
         ],
@@ -43,7 +43,7 @@ export const CLIENT_API = ky.create({
         afterResponse : [
             async ( request, options, response) => {
 
-                const bodyParser = process.env.NODE_ENV === "production" ? DataDecrypt(await response.arrayBuffer()) : await response.json();
+                const bodyParser = process.env.NODE_ENV === "production" ? DataDeCompression(await response.arrayBuffer()) : await response.json();
 
                 const result = JSON.stringify(bodyParser);
 

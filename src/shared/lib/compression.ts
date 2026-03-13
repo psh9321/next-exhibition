@@ -1,7 +1,7 @@
 
 import pako from "pako"
  
-export function DataEncrypt(params : string){
+export function DataCompression(params : string){
 
     if(process.env.NODE_ENV !== "production") return params
 
@@ -17,7 +17,7 @@ export function DataEncrypt(params : string){
  * 
  * @returns {any} 복호화된 데이터 
  */
-export function DataDecrypt(params : ArrayBuffer){
+export function DataDeCompression(params : ArrayBuffer){
 
     if(process.env.NODE_ENV !== "production") return params
 
