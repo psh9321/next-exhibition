@@ -3,9 +3,9 @@ import type { Metadata } from "next"
 import "./reset.css"
 import "./font.css"
 
-import { StyledComponentsRegistry } from "@/Provider/StyledComponentsRegistry";
+import { StyledComponentsRegistry } from "@/shared/Provider/StyledComponentsRegistry";
 import { LayoutWrapper } from "@/shared/ui/LayoutWrapper";
-import QueryProvider from "@/Provider/QueryProvider";
+import QueryProvider from "@/shared/Provider/QueryProvider";
 import { KakaoInitializer } from "@/script/KakaoInitializer";
 
 export const metadata : Metadata = {
