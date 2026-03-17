@@ -49,12 +49,15 @@ export const LoadingIcon = ({ children, style } : LOADING_ICON) => {
     },[]);
 
     return (
-        <Wrapper>
-            <Inner ref={parentRef} style={style}>
-                <P>{children}</P>
-                <Span ref={animationRef}>.</Span>
-            </Inner>
-        </Wrapper>
+        <Portal>
+            <Wrapper>
+                <Inner ref={parentRef} style={style}>
+                    <P>{children}</P>
+                    <Span ref={animationRef}>.</Span>
+                </Inner>
+            </Wrapper>
+        </Portal>
+
     );
 };
 
@@ -67,14 +70,12 @@ export const FetchLoadingElement = () => {
     if(loadingStatus !== "fetch") return <></>;
 
     return (
-        <Portal>
-            <LoadingIcon style={{
-                width : "300px"
-            }}>
-                <Scroll/>
-                전시정보 불러오는 중
-            </LoadingIcon>
-        </Portal>
+        <LoadingIcon style={{
+            width : "300px"
+        }}>
+            <Scroll/>
+            전시정보 불러오는 중
+        </LoadingIcon>
     )
 }
 
@@ -87,11 +88,9 @@ export const SearchLoadingElement = () => {
     if(loadingStatus !== "search") return <></>;
 
     return (
-        <Portal>
-            <LoadingIcon>
-                <ScanSearch/>검색중
-            </LoadingIcon>
-        </Portal>
+        <LoadingIcon>
+            <ScanSearch/>검색중
+        </LoadingIcon>
     )
 }
 
@@ -104,10 +103,8 @@ export const RouteLoadingElement = () => {
     if(loadingStatus !== "route") return <></>;
 
     return (
-        <Portal>
-            <LoadingIcon>
-                <Route/>로딩중
-            </LoadingIcon>
-        </Portal>
+        <LoadingIcon>
+            <Route/>로딩중
+        </LoadingIcon>
     )   
 }
