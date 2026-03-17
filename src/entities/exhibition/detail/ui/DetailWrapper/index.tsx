@@ -72,10 +72,8 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
 
     /** 라우트 로딩뷰 비활성화 */
     useEffect(() => {
-        return () => {
-            if(loadingState) SetLoadingStatus("");
-        }
-    },[loadingState])
+        return () => SetLoadingStatus("");
+    },[loadingState, SetLoadingStatus])
 
     return (
         <>
