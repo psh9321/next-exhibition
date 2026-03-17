@@ -64,7 +64,9 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
         
         const section = sectionRef["current"];
 
-        FadeInOutScaleAnimation<HTMLElement>(section, "in", 200);
+        FadeInOutScaleAnimation<HTMLElement>(section, "in", 200, () => {
+            if(loadingState) SetLoadingStatus("");
+        });
 
     },[]);
 
