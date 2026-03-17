@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { useShallow } from "zustand/shallow";
 
 import { decode } from "he"
 
@@ -30,10 +29,7 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
 
     const sectionRef = useRef<HTMLElement>(null);
 
-    const { SetLoadingStatus, loadingState } = useLoadingStore(useShallow(state => ({
-        SetLoadingStatus : state.SetLoadingStatus,
-        loadingState : state.loadingStatus
-    })));
+    const SetLoadingStatus = useLoadingStore(state => state.SetLoadingStatus);
 
     const queryData = queryClient.getQueryData([process.env.NEXT_PUBLIC_QUERY_KEY_EXHIBITION, seq]) as EXHIBITION_DETAIL_ITEM;
 
@@ -68,12 +64,9 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
             SetLoadingStatus("");
         });
 
-    },[]);
-
-    /** 라우트 로딩뷰 비활성화 */
-    useEffect(() => {
         return () => SetLoadingStatus("");
-    },[loadingState, SetLoadingStatus])
+
+    },[]);
 
     return (
         <>
