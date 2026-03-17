@@ -18,13 +18,16 @@ import { BodyScrollLock } from "@/shared/lib/bodyScrollLock";
 
 export const ExhibitionItem = ({ item }: { item: EXHIBITION_ITEM }) => {
 
-    const { SetLoadingStatus } = useLoadingStore(
+    const { SetLoadingStatus, loadingState } = useLoadingStore(
         useShallow((state) => ({
             SetLoadingStatus: state.SetLoadingStatus,
+            loadingState : state.loadingStatus
         })),
     );
 
     function AnchorCallback() {
+        if(loadingState) return 
+        
         BodyScrollLock(true);
         SetLoadingStatus("route");
     }
