@@ -4,12 +4,12 @@ import { create } from 'zustand'
 
 type LOADING_STATUS = "" | "fetch" | "search" | "route";
 
-interface INTERFACE {
+interface LOADING_STORE {
     loadingStatus : LOADING_STATUS,
     SetLoadingStatus : (loadingStatus : LOADING_STATUS) => void
 }
 
-export const useLoadingStore = create<INTERFACE>(( set ) => ({
+export const useLoadingStore = create<LOADING_STORE>(( set ) => ({
     loadingStatus : "",
     SetLoadingStatus(loadingStatus) { set({loadingStatus}) }
 }))

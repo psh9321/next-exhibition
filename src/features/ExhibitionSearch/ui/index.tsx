@@ -7,7 +7,7 @@ import { AreaSelectBox } from './AreaSelectBox';
 import { CategorySelectBox } from "./CategorySelectBox";
 
 export const ExhibitionSearch = () => {
-    
+
     return (
         <Section>
             <h2 className="hidden">전시 제목, 지역, 장소, 카테고리 검색</h2>

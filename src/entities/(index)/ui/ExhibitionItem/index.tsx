@@ -15,21 +15,21 @@ import { SrcHttpToHttps } from "@/shared/lib/srcHttpToHttps";
 import { ImageError } from "@/shared/lib/imgError";
 import { ExhibitionDateFormat } from "@/shared/lib/dateFormat";
 import { BodyScrollLock } from "@/shared/lib/bodyScrollLock";
+import { useSearchParams } from "next/navigation";
+import { startTransition } from "react";
 
 export const ExhibitionItem = ({ item }: { item: EXHIBITION_ITEM }) => {
 
-    const { SetLoadingStatus, loadingState } = useLoadingStore(
-        useShallow((state) => ({
-            SetLoadingStatus: state.SetLoadingStatus,
-            loadingState : state.loadingStatus
-        })),
-    );
+    const searchParams = useSearchParams()
 
+    const { SetLoadingStatus } = useLoadingStore(useShallow((state) => ({
+        SetLoadingStatus: state.SetLoadingStatus,
+    })));
+
+    
     function AnchorCallback() {
-        if(loadingState) return 
-        
         BodyScrollLock(true);
-        SetLoadingStatus("route");
+        startTransition(() => SetLoadingStatus("route")); 
     }
 
     if(!item) return <></>
@@ -39,7 +39,7 @@ export const ExhibitionItem = ({ item }: { item: EXHIBITION_ITEM }) => {
             <Link
                 scroll={false}
                 onClick={AnchorCallback}
-                href={`/exhibition/${item?.["seq"]}`}
+                href={`/exhibition/${item?.["seq"]}?${searchParams.toString()}`}
             >
                 <Div>
                     <Image

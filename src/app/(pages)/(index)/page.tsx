@@ -34,7 +34,6 @@ const IndexPageServer = async ({ searchParams } : SEARCH_RESULT_INTERFACE) => {
     const queryServer = new QueryClient();
     
     const { searchArea, searchKeyword, searchCategory } = await searchParams;
-    // new URLSearchParams()
 
     const queryKeyObj : {
         [key : string] : string

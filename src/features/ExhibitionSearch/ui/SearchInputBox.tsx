@@ -11,11 +11,10 @@ import { Search } from 'lucide-react';
 import { Div, Input } from "./_html";
 
 import { useLoadingStore } from "@/shared/store/useLoadingStore";
-import { SearchLoadingElement } from '@/shared/ui/Loading';
-
-const key = "searchKeyword";
 
 export const SearchInputBox = () => {
+
+    const key = "searchKeyword";
 
     const router = useRouter();
 
@@ -46,7 +45,6 @@ export const SearchInputBox = () => {
                 params.set(key, value);   
             }
             else {
-
                 if(!params.has(key)) return
 
                 params.delete(key);
@@ -54,7 +52,7 @@ export const SearchInputBox = () => {
 
             /** 검색 로딩뷰 활성화 */
             setLoadingStatus("search")
-
+            
             router.replace(`?${params.toString()}`,{ scroll : false });
         }, 500);
     }
@@ -66,8 +64,6 @@ export const SearchInputBox = () => {
 
     return (
         <>
-            <SearchLoadingElement/>
-            
             <Div>
                 <Search/>
                 <Input defaultValue={searchParams.get("searchKeyword")??""} type="text" placeholder="전시 제목, 장소 검색" onInput={OnInputCallback} />

@@ -7,6 +7,7 @@ import { StyledComponentsRegistry } from "@/provider/StyledComponentsRegistry";
 import { LayoutWrapper } from "@/shared/ui/LayoutWrapper";
 import QueryProvider from "@/provider/QueryProvider";
 import { KakaoInitializer } from "@/script/KakaoInitializer";
+import { LoadingView } from "@/shared/ui/LoadingView";
 
 export const metadata : Metadata = {
   verification : {
@@ -37,6 +38,7 @@ export const metadata : Metadata = {
   },
 };
 
+
 export default function RootLayout({ children }: LAYOUT_CHILD) {
   return (
     <html lang="ko">
@@ -52,7 +54,8 @@ export default function RootLayout({ children }: LAYOUT_CHILD) {
           </LayoutWrapper>
         </StyledComponentsRegistry>
 
-        <div id="portal-root"></div>
+        <LoadingView/>
+        
       </body>
     </html>
   );

@@ -14,7 +14,6 @@ import { BodyScrollLock } from "@/shared/lib/bodyScrollLock";
 
 import { EmptyItem } from "@/entities/(index)/ui/EmptyItem";
 import { ExhibitionItem } from "@/entities/(index)/ui/ExhibitionItem";
-import { FetchLoadingElement, RouteLoadingElement } from "@/shared/ui/Loading";
 
 export const ExhibitionList = () => {
 
@@ -27,7 +26,7 @@ export const ExhibitionList = () => {
     if(searchParams.get("searchCategory")) queryStringObj["searchCategory"] = searchParams.get("searchCategory") as string;
     
     const { data, fetchNextPage, isLoading, isFetching } = useInfiniteQuery({
-        queryKey: [process.env.NEXT_PUBLIC_QUERY_KEY_EXHIBITION as string, "list",queryStringObj],
+        queryKey: [process.env.NEXT_PUBLIC_QUERY_KEY_EXHIBITION as string, "list", queryStringObj],
         queryFn : Setup,
         initialPageParam: 1,
         getNextPageParam : (lastPage) => {
@@ -45,12 +44,14 @@ export const ExhibitionList = () => {
             return undefined
         }
     });
+
     const { ref, isView } = useInterSectionObserver<HTMLLIElement>({
         threshold : 0
     });
 
-    const { SetLoadingStatus } = useLoadingStore(useShallow(state => ({
+    const { SetLoadingStatus, loadingState } = useLoadingStore(useShallow(state => ({
         SetLoadingStatus : state.SetLoadingStatus,
+        loadingState : state.loadingStatus
     })));
 
     async function Setup({ pageParam } : QueryFunctionContext){
@@ -75,6 +76,14 @@ export const ExhibitionList = () => {
     const isEmpty = data?.pages[0]?.total as number <= 0;
 
     useEffect(() => {
+        if(isEmpty) return 
+        if(isLoading) return
+
+        if(isView) fetchNextPage();
+        
+    },[isEmpty, isLoading, isView, fetchNextPage]);
+
+    useEffect(() => {
         if(isFetching) {
             SetLoadingStatus("fetch");
             BodyScrollLock(true);
@@ -84,14 +93,6 @@ export const ExhibitionList = () => {
             BodyScrollLock(false);
         }
     },[isFetching, SetLoadingStatus])
-
-    useEffect(() => {
-        if(isEmpty) return 
-        if(isLoading) return
-
-        if(isView) fetchNextPage();
-        
-    },[isEmpty, isLoading, isView, fetchNextPage]);
 
     return (
         <Article>
@@ -105,10 +106,10 @@ export const ExhibitionList = () => {
 
                         const item = page["data"];
 
-                        if(!item) return <Fragment key={`전시목록-데이터없음`}></Fragment>
+                        if(!item) return <Fragment key={`전시목록-데이터없음`}>전시목록 데이터없음</Fragment>
 
                         return item.map((el, i) => {
-                            if(!el) return <Fragment key={`exhibition-none-data-${i}`}></Fragment>
+                            if(!el) return <Fragment key={`exhibition-none-data-${i}`}>exhibition none data {i}</Fragment>
                             
                             return (
                                 <ExhibitionItem  key={`${el?.["title"]}-${i}`} item={el} />
@@ -121,8 +122,6 @@ export const ExhibitionList = () => {
                 <li ref={ref} style={{height : "1px"}}></li>
             </Ul>        
 
-            <FetchLoadingElement/>
-            <RouteLoadingElement/>
         </Article>
     )
 }

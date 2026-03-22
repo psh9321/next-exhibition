@@ -67,9 +67,7 @@ export const ExhibitionDetailServer = async (
     await queryServer.prefetchQuery({
         queryKey: [process.env.NEXT_PUBLIC_QUERY_KEY_EXHIBITION, seq],
         queryFn: async () => {
-            const result = (await API_EXHIBITION_DETAIL_SERVER(
-                seq,
-            )) as EXHIBITION_DETAIL_ITEM;
+            const result = (await API_EXHIBITION_DETAIL_SERVER(seq)) as EXHIBITION_DETAIL_ITEM;
 
             return result;
         },

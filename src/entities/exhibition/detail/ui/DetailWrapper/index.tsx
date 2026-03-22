@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react";
+import { startTransition, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -19,7 +19,6 @@ import { useLoadingStore } from "@/shared/store/useLoadingStore";
 import { FadeInOutScaleAnimation } from "@/shared/lib/fadeInOutScaleAnimation";
 import { BodyScrollLock } from "@/shared/lib/bodyScrollLock";
 import { EmptyPage } from "@/shared/ui/EmptyPage";
-import { RouteLoadingElement } from "@/shared/ui/Loading";
 
 export const DetailWrapper = ({ seq } : {seq : string }) => {
 
@@ -40,9 +39,12 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
 
         FadeInOutScaleAnimation<HTMLElement>(sectionRef["current"], "out", 200, () => {
             
-            if(document.body.style.overflow === "hidden") BodyScrollLock(false);
+            BodyScrollLock(false);
 
-            window.history.length > 1 ? navigation.back() : navigation.push("/");
+            startTransition(() => {
+                window.history.length > 1 ? navigation.back() : navigation.push("/");
+            })
+            
         });
      }
 
@@ -64,7 +66,7 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
             SetLoadingStatus("");
         });
 
-        return () => SetLoadingStatus("");
+        return () => SetLoadingStatus("")
 
     },[]);
 
@@ -94,7 +96,6 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
                 </Section>
             </Wrapper>
 
-            <RouteLoadingElement/>
         </>
     )
 }

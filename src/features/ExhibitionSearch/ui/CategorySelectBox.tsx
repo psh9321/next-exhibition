@@ -7,19 +7,18 @@ import { useEffect, useState } from 'react';
 import { useShallow } from "zustand/shallow"
 
 import { DropDownMenu } from '@/shared/ui/DropDownMenu';
-import { SearchLoadingElement } from '@/shared/ui/Loading';
 
 import { useLoadingStore } from '@/shared/store/useLoadingStore';
 
-const key = "searchCategory";
-
-const categoryData = [ 
-    { key : "공연/전시", value : "A"},
-    { key : "행사/축제", value : "B"},
-    { key : "교육/체험", value : "C"}
-];
-
 export const CategorySelectBox = () => {
+
+    const key = "searchCategory";
+
+    const categoryData = [ 
+        { key : "공연/전시", value : "A"},
+        { key : "행사/축제", value : "B"},
+        { key : "교육/체험", value : "C"}
+    ];
     
     const router = useRouter();
 
@@ -31,14 +30,14 @@ export const CategorySelectBox = () => {
         setLoadingStatus : state.SetLoadingStatus
     })));
 
-    const params = new URLSearchParams(searchParams.toString());
-
     function ValidateCallback(value : string) { 
 
         if(value === "A" && currentValue === "") return
         if(value === currentValue) return
          
         SetCurrentValue(value as EXHIBITION_CATEGORY);
+
+        const params = new URLSearchParams(searchParams.toString());
 
         if(value === "A") {
             if(params.has(key)) params.delete(key);
@@ -63,8 +62,6 @@ export const CategorySelectBox = () => {
     
     return (
         <>
-            <SearchLoadingElement/>
-            
             <DropDownMenu hiddenText='카테고리 선택' defaultValue={defaultValue} data={categoryData} validata={ValidateCallback}/>        
         </>
     );
