@@ -1,7 +1,5 @@
 import { CSSProperties, useEffect, useRef } from "react";
 
-import { useShallow } from "zustand/shallow";
-
 import { ScanSearch, Route, Scroll } from 'lucide-react';
 
 import { useLoadingStore } from "@/shared/store/useLoadingStore";

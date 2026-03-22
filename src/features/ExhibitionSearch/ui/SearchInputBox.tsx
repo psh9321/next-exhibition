@@ -4,8 +4,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useEffect, useRef } from 'react';
 
-import { useShallow } from "zustand/shallow"
-
 import { Search } from 'lucide-react';
 
 import { Div, Input } from "./_html";
@@ -22,9 +20,7 @@ export const SearchInputBox = () => {
 
     const debounceTimer = useRef<NodeJS.Timeout | null>(null);
     
-    const { setLoadingStatus } = useLoadingStore(useShallow(state => ({
-        setLoadingStatus : state.SetLoadingStatus
-    })));
+    const SetLoadingStatus = useLoadingStore(state => state.SetLoadingStatus);
 
     function OnInputCallback(e : React.InputEvent<HTMLInputElement>) {
 
@@ -51,16 +47,14 @@ export const SearchInputBox = () => {
             }
 
             /** 검색 로딩뷰 활성화 */
-            setLoadingStatus("search")
+            SetLoadingStatus("search")
             
             router.replace(`?${params.toString()}`,{ scroll : false });
         }, 500);
     }
 
     /** 검색 로딩뷰 비활성화 */
-    useEffect(() => {
-        setLoadingStatus("");
-    },[searchParams, setLoadingStatus])
+    useEffect(() => SetLoadingStatus(""),[searchParams, SetLoadingStatus]);
 
     return (
         <>

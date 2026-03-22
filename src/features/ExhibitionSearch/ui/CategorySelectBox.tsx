@@ -4,8 +4,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useEffect, useState } from 'react';
 
-import { useShallow } from "zustand/shallow"
-
 import { DropDownMenu } from '@/shared/ui/DropDownMenu';
 
 import { useLoadingStore } from '@/shared/store/useLoadingStore';
@@ -26,9 +24,7 @@ export const CategorySelectBox = () => {
 
     const [ currentValue, SetCurrentValue ] = useState<EXHIBITION_CATEGORY | string>(searchParams.get(key)??"");
 
-    const { setLoadingStatus } = useLoadingStore(useShallow(state => ({
-        setLoadingStatus : state.SetLoadingStatus
-    })));
+    const SetLoadingStatus = useLoadingStore(state => state.SetLoadingStatus);
 
     function ValidateCallback(value : string) { 
 
@@ -47,7 +43,7 @@ export const CategorySelectBox = () => {
         }
         
         /** 검색 로딩뷰 활성화 */
-        setLoadingStatus("search");
+        SetLoadingStatus("search");
 
         router.replace(`?${params.toString()}`,{ scroll : false });
         
@@ -56,9 +52,7 @@ export const CategorySelectBox = () => {
     const defaultValue = categoryData.find(el => el["value"] === currentValue)?.["value"] ?? categoryData[0]["value"];
 
     /** 검색 로딩뷰 비활성화 */
-    useEffect(() => {
-        setLoadingStatus("");
-    },[searchParams, setLoadingStatus])
+    useEffect(() => SetLoadingStatus(""),[searchParams, SetLoadingStatus])
     
     return (
         <>

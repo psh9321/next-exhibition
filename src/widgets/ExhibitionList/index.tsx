@@ -2,7 +2,6 @@
 import { Fragment, useEffect } from "react";
 import { QueryFunctionContext, useInfiniteQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation"
-import { useShallow } from "zustand/shallow";
 
 import { Article, Ul } from "./_html"
 
@@ -49,10 +48,7 @@ export const ExhibitionList = () => {
         threshold : 0
     });
 
-    const { SetLoadingStatus, loadingState } = useLoadingStore(useShallow(state => ({
-        SetLoadingStatus : state.SetLoadingStatus,
-        loadingState : state.loadingStatus
-    })));
+    const SetLoadingStatus = useLoadingStore(state => state.SetLoadingStatus);
 
     async function Setup({ pageParam } : QueryFunctionContext){
 

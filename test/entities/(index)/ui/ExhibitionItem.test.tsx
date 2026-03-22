@@ -25,10 +25,6 @@ jest.mock('next/navigation', () => ({
     }),
 }))
 
-jest.mock('zustand/shallow', () => ({
-    useShallow: (selector: <T>(state: T) => T) => selector,
-}))
-
 jest.mock('@/shared/store/useLoadingStore', () => ({
     useLoadingStore: (selector: (state: { SetLoadingStatus: jest.Mock }) => unknown) =>
         selector({ SetLoadingStatus: jest.fn() }),

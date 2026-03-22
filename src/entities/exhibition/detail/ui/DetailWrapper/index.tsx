@@ -46,9 +46,6 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
      }
 
     function WrapperCloseCallback(e : React.UIEvent) { 
-        e.preventDefault();
-        e.stopPropagation();
-
         if(e.target === e.currentTarget) CloseCallback();
     }
 
