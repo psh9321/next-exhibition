@@ -1,6 +1,6 @@
 "use client"
 
-import { startTransition, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -40,10 +40,7 @@ export const DetailWrapper = ({ seq } : {seq : string }) => {
         FadeInOutScaleAnimation<HTMLElement>(sectionRef["current"], "out", 200, () => {
             
             BodyScrollLock(false);
-
-            startTransition(() => {
-                window.history.length > 1 ? navigation.back() : navigation.push("/");
-            })
+            window.history.length > 1 ? navigation.back() : navigation.push("/");
             
         });
      }

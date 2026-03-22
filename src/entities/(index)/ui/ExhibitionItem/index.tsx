@@ -3,8 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { useShallow } from "zustand/shallow";
-
 import { decode } from "he";
 
 import { Li, Div, Dl } from "./_html";
@@ -16,20 +14,16 @@ import { ImageError } from "@/shared/lib/imgError";
 import { ExhibitionDateFormat } from "@/shared/lib/dateFormat";
 import { BodyScrollLock } from "@/shared/lib/bodyScrollLock";
 import { useSearchParams } from "next/navigation";
-import { startTransition } from "react";
 
 export const ExhibitionItem = ({ item }: { item: EXHIBITION_ITEM }) => {
 
     const searchParams = useSearchParams()
 
-    const { SetLoadingStatus } = useLoadingStore(useShallow((state) => ({
-        SetLoadingStatus: state.SetLoadingStatus,
-    })));
-
+    const SetLoadingStatus = useLoadingStore(state => state.SetLoadingStatus);
     
     function AnchorCallback() {
+        SetLoadingStatus("route");
         BodyScrollLock(true);
-        startTransition(() => SetLoadingStatus("route")); 
     }
 
     if(!item) return <></>
