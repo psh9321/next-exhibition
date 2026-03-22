@@ -1,12 +1,15 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ExhibitionList } from '@/widgets/ExhibitionList'
+
+const mockSetLoadingStatus = jest.fn()
 
 jest.mock('next/navigation', () => ({
     useSearchParams: () => ({
         get: jest.fn().mockReturnValue(null),
         entries: jest.fn().mockReturnValue([]),
+        toString: jest.fn().mockReturnValue(''),
     }),
 }))
 
@@ -19,9 +22,9 @@ jest.mock('@/shared/lib/bodyScrollLock', () => ({
 }))
 
 jest.mock('@/shared/store/useLoadingStore', () => ({
-    useLoadingStore: () => ({
-        SetLoadingStatus: jest.fn(),
-    }),
+    useLoadingStore: jest.fn((selector: (state: { SetLoadingStatus: jest.Mock }) => jest.Mock) =>
+        selector({ SetLoadingStatus: mockSetLoadingStatus })
+    ),
 }))
 
 jest.mock('@/shared/hook/useInterSectionObserver', () => ({
@@ -29,6 +32,34 @@ jest.mock('@/shared/hook/useInterSectionObserver', () => ({
         ref: { current: null },
         isView: false,
     }),
+}))
+
+jest.mock('next/image', () => ({
+    __esModule: true,
+    default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => <img {...props} />,
+}))
+
+jest.mock('next/link', () => ({
+    __esModule: true,
+    default: ({ children, href }: { children: React.ReactNode; href: string }) => (
+        <a href={href}>{children}</a>
+    ),
+}))
+
+jest.mock('@/shared/lib/srcHttpToHttps', () => ({
+    SrcHttpToHttps: (src: string) => src,
+}))
+
+jest.mock('@/shared/lib/imgError', () => ({
+    ImageError: jest.fn(),
+}))
+
+jest.mock('@/shared/lib/dateFormat', () => ({
+    ExhibitionDateFormat: (date: number) => String(date),
+}))
+
+jest.mock('he', () => ({
+    decode: (str: string) => str,
 }))
 
 const mockData = {
@@ -57,18 +88,6 @@ const mockData = {
     ],
 }
 
-jest.mock('next/image', () => ({
-    __esModule: true,
-    default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => <img {...props} />,
-}))
-
-jest.mock('next/link', () => ({
-    __esModule: true,
-    default: ({ children, href }: { children: React.ReactNode; href: string }) => (
-        <a href={href}>{children}</a>
-    ),
-}))
-
 function createWrapper() {
     const queryClient = new QueryClient({
         defaultOptions: { queries: { retry: false } },
@@ -80,24 +99,87 @@ function createWrapper() {
 
 describe('ExhibitionList', () => {
     beforeEach(() => {
+        jest.clearAllMocks()
         const { API_EXHIBITION_LIST_CLIENT } = jest.requireMock('@/entities/(index)/api/exhibition.list.client')
         API_EXHIBITION_LIST_CLIENT.mockResolvedValue(mockData)
     })
 
-    it('로딩 중 FetchLoadingElement가 렌더링된다', () => {
-        render(<ExhibitionList />, { wrapper: createWrapper() })
-        // FetchLoadingElement가 마운트됨을 확인 (article 태그로 래핑)
-        expect(document.querySelector('article')).toBeInTheDocument()
+    describe('렌더링 테스트', () => {
+        it('마운트 시 article 컨테이너가 렌더링된다', () => {
+            render(<ExhibitionList />, { wrapper: createWrapper() })
+            expect(document.querySelector('article')).toBeInTheDocument()
+        })
+
+        it('데이터 로드 후 전시 아이템이 렌더링된다', async () => {
+            render(<ExhibitionList />, { wrapper: createWrapper() })
+            expect(await screen.findByText('첫 번째 전시')).toBeInTheDocument()
+            expect(screen.getByText('두 번째 전시')).toBeInTheDocument()
+        })
+
+        it('total이 0이면 EmptyItem이 렌더링된다', async () => {
+            const { API_EXHIBITION_LIST_CLIENT } = jest.requireMock('@/entities/(index)/api/exhibition.list.client')
+            API_EXHIBITION_LIST_CLIENT.mockResolvedValue({ page: 1, total: 0, limit: 24, data: [] })
+
+            render(<ExhibitionList />, { wrapper: createWrapper() })
+            expect(await screen.findByText('게시물이 없습니다.')).toBeInTheDocument()
+        })
+
+        it('무한 스크롤 감지용 li 요소가 렌더링된다', () => {
+            render(<ExhibitionList />, { wrapper: createWrapper() })
+            const sentinel = document.querySelector('li[style]')
+            expect(sentinel).toBeInTheDocument()
+        })
     })
 
-    it('데이터 없을 때 EmptyItem을 렌더링한다', async () => {
-        const { API_EXHIBITION_LIST_CLIENT } = jest.requireMock('@/entities/(index)/api/exhibition.list.client')
-        API_EXHIBITION_LIST_CLIENT.mockResolvedValue({ page: 1, total: 0, limit: 24, data: [] })
+    describe('API 호출 테스트', () => {
+        it('마운트 시 API_EXHIBITION_LIST_CLIENT가 호출된다', async () => {
+            const { API_EXHIBITION_LIST_CLIENT } = jest.requireMock('@/entities/(index)/api/exhibition.list.client')
+            render(<ExhibitionList />, { wrapper: createWrapper() })
+            await waitFor(() => {
+                expect(API_EXHIBITION_LIST_CLIENT).toHaveBeenCalledTimes(1)
+            })
+        })
 
-        render(<ExhibitionList />, { wrapper: createWrapper() })
-        // total이 0이면 EmptyItem 표시
-        // (비동기 처리이므로 findByText 사용)
-        const emptyMsg = await screen.findByText('게시물이 없습니다.')
-        expect(emptyMsg).toBeInTheDocument()
+        it('API 호출 시 offset 파라미터가 포함된다', async () => {
+            const { API_EXHIBITION_LIST_CLIENT } = jest.requireMock('@/entities/(index)/api/exhibition.list.client')
+            render(<ExhibitionList />, { wrapper: createWrapper() })
+            await waitFor(() => {
+                expect(API_EXHIBITION_LIST_CLIENT).toHaveBeenCalledWith(
+                    expect.objectContaining({ offset: 1 })
+                )
+            })
+        })
+    })
+
+    describe('기능 테스트', () => {
+        it('데이터 fetching 중 SetLoadingStatus("fetch")가 호출된다', async () => {
+            render(<ExhibitionList />, { wrapper: createWrapper() })
+            await waitFor(() => {
+                expect(mockSetLoadingStatus).toHaveBeenCalledWith('fetch')
+            })
+        })
+
+        it('데이터 로드 완료 후 SetLoadingStatus("")가 호출된다', async () => {
+            render(<ExhibitionList />, { wrapper: createWrapper() })
+            await waitFor(() => {
+                expect(mockSetLoadingStatus).toHaveBeenCalledWith('')
+            })
+        })
+
+        it('데이터 fetching 중 BodyScrollLock(true)이 호출된다', async () => {
+            const { BodyScrollLock } = jest.requireMock('@/shared/lib/bodyScrollLock')
+            render(<ExhibitionList />, { wrapper: createWrapper() })
+            await waitFor(() => {
+                expect(BodyScrollLock).toHaveBeenCalledWith(true)
+            })
+        })
+
+        it('데이터 로드 완료 후 BodyScrollLock(false)이 호출된다', async () => {
+            const { BodyScrollLock } = jest.requireMock('@/shared/lib/bodyScrollLock')
+            render(<ExhibitionList />, { wrapper: createWrapper() })
+            await waitFor(() => {
+                expect(BodyScrollLock).toHaveBeenCalledWith(false)
+            })
+        })
     })
 })
