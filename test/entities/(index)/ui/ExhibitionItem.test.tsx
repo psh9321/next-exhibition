@@ -19,14 +19,35 @@ jest.mock('next/link', () => ({
     ),
 }))
 
-jest.mock('@/shared/store/useLoadingStore', () => ({
-    useLoadingStore: () => ({
-        SetLoadingStatus: jest.fn(),
+jest.mock('next/navigation', () => ({
+    useSearchParams: () => ({
+        toString: () => '',
     }),
+}))
+
+jest.mock('zustand/shallow', () => ({
+    useShallow: (selector: <T>(state: T) => T) => selector,
+}))
+
+jest.mock('@/shared/store/useLoadingStore', () => ({
+    useLoadingStore: (selector: (state: { SetLoadingStatus: jest.Mock }) => unknown) =>
+        selector({ SetLoadingStatus: jest.fn() }),
 }))
 
 jest.mock('@/shared/lib/bodyScrollLock', () => ({
     BodyScrollLock: jest.fn(),
+}))
+
+jest.mock('he', () => ({
+    decode: (str: string) => str,
+}))
+
+jest.mock('@/shared/lib/srcHttpToHttps', () => ({
+    SrcHttpToHttps: (src: string) => src,
+}))
+
+jest.mock('@/shared/lib/imgError', () => ({
+    ImageError: jest.fn(),
 }))
 
 const mockItem: EXHIBITION_ITEM = {
@@ -34,8 +55,8 @@ const mockItem: EXHIBITION_ITEM = {
     title: '특별 전시회',
     place: '서울 미술관',
     area: '서울',
-    startDate: 20241201,
-    endDate: 20241231,
+    startDate: '20241201',
+    endDate: '20241231',
     thumbnail: 'https://example.com/thumb.jpg',
 }
 
@@ -63,7 +84,7 @@ describe('ExhibitionItem', () => {
     it('전시 상세 링크가 seq를 포함한다', () => {
         render(<ExhibitionItem item={mockItem} />)
         const link = screen.getByRole('link')
-        expect(link).toHaveAttribute('href', '/exhibition/EX001')
+        expect(link).toHaveAttribute('href', '/exhibition/EX001?')
     })
 
     it('item이 없으면 아무것도 렌더링하지 않는다', () => {
