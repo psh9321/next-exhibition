@@ -1,15 +1,19 @@
 'use client'
 
+import dynamic from "next/dynamic";
+
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import useMediaQuery from "@parksuhyun9321/use-media-query";
 
 import { Div, Dl, Aside } from "./html";
-import { Headers } from "@/shared/ui/Headers";
-import { ExhibitionSearch } from "@/features/ExhibitionSearch/ui";
 
 import { useInterSectionObserver } from "@/shared/hook/useInterSectionObserver";
+
+const Headers = dynamic(() => import("@/shared/ui/Headers").then(m => ({ default: m.Headers })));
+
+const ExhibitionSearch = dynamic(() => import("@/features/ExhibitionSearch/ui").then(rs => ({default : rs.ExhibitionSearch})));
 
 const Contents = () => {
 
