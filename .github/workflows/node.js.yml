@@ -89,4 +89,5 @@ jobs:
             sudo git pull origin main
             sudo pnpm install --frozen-lockfile
             sudo pnpm run build
-            sudo pnpm start
+            pnpm start
+            pnpm reload

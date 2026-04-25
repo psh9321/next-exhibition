@@ -20,7 +20,7 @@ const Contents = () => {
     return (
         <>
             <Dl>
-                <dt>Discover Exhibitions22</dt>
+                <dt>Discover Exhibitions</dt>
                 <dd>전시, 하나의 경험이 되다.</dd>
             </Dl>    
             <ExhibitionSearch/>
