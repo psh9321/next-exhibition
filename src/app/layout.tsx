@@ -1,5 +1,7 @@
 import type { Metadata } from "next"
 
+import { DIST_VER } from "version"
+
 import "./reset.css"
 import "./font.css"
 
@@ -55,7 +57,7 @@ export default function RootLayout({ children }: LAYOUT_CHILD) {
         </StyledComponentsRegistry>
 
         <LoadingView/>
-        
+        <h2 className="hidden">{DIST_VER}</h2>
       </body>
     </html>
   );
