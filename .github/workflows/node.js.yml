@@ -62,11 +62,11 @@ jobs:
         run: |
           node -e "
             const fs = require('fs');
-            const v = JSON.parse(fs.readFileSync('verseion.json', 'utf8'));
+            const v = JSON.parse(fs.readFileSync('version.json', 'utf8'));
             const parts = v.DIST_VER.split('.');
             parts[3] = String(Number(parts[3]) + 1);
             v.DIST_VER = parts.join('.');
-            fs.writeFileSync('verseion.json', JSON.stringify(v, null, '\t') + '\n');
+            fs.writeFileSync('version.json', JSON.stringify(v, null, '\t') + '\n');
             console.log('DIST_VER:', v.DIST_VER);
           "
 
@@ -74,7 +74,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add verseion.json
+          git add version.json
           git commit -m "chore: bump DIST_VER [skip ci]"
           git push
 
