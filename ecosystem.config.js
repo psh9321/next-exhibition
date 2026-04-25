@@ -1,7 +1,7 @@
 module.exports = {
     apps : [
         {
-            name : "next-project-booknote",
+            name : "next-project-exhibition",
             script: "pnpm", /** 앱 실행 스크립트 */
             args : "prod",
             autorestart : false, /** 프로세스 실패 시 자동으로 재시작 할지 여부 */
