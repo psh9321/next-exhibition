@@ -1,7 +1,7 @@
 module.exports = {
     apps : [
         {
-            name : "test",
+            name : "next-project-exhibition",
             script: "node_modules/next/dist/bin/next", /** 앱 실행 스크립트 */
             args : "start -p 3000",
             autorestart : false, /** 프로세스 실패 시 자동으로 재시작 할지 여부 */
