@@ -9,6 +9,6 @@ export default function roboto() : MetadataRoute.Robots {
                 allow : "/"
             }
         ],
-        sitemap : "https://next-exhibition.vercel.app/sitemap.xml"
+        sitemap : "https://exhibition.psh9321-portfolio.p-e.kr/sitemap.xml"
     }
 }

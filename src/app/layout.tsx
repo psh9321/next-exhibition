@@ -11,9 +11,9 @@ import { LoadingView } from "@/shared/ui/LoadingView";
 
 export const metadata : Metadata = {
   verification : {
-    google : "_0rSwIULAnx7U0YtIZE7xglEJZ6HC9jWxl57Uck9CZA"
+    google : "YNRCvA1ZisdnrnUT_ide10_p6OFQtGi7Ktcdg1sSeXQ"
   },
-  metadataBase: new URL("https://next-exhibition.vercel.app"),
+  metadataBase: new URL("https://exhibition.psh9321-portfolio.p-e.kr"),
   creator : "프론트엔드 개발자 박수현",
   publisher : "프론트엔드 개발자 박수현",
   title: {
@@ -24,7 +24,7 @@ export const metadata : Metadata = {
   keywords : ["전시", "전시 정보", "전국 전시 정보", "전시 정보 플랫폼", "exhibition", "discover exhibition", "exhibition discover"],
   appLinks : {
     web : {
-      url : "https://next-exhibition.vercel.app",
+      url : "https://exhibition.psh9321-portfolio.p-e.kr",
       should_fallback : true,
     }
   },
