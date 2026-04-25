@@ -21,14 +21,14 @@ export async function generateMetadata({ params }: { params: SEARCH_PARAMS }) {
     const { title, place, startDate, endDate, imgUrl } = result;
 
     return {
-        metadataBase: new URL(`https://next-exhibition.vercel.app/exhibition/${seq}`),
+        metadataBase: new URL(`https://exhibition.psh9321-portfolio.p-e.kr/exhibition/${seq}`),
         title: decode(title),
         description: `${place} | ${ExhibitionDateFormat(startDate)}~${ExhibitionDateFormat(endDate)}`,
         keywords : [decode(title)],
         category : decode(title),
         appLinks : {
             web : {
-            url : `https://next-exhibition.vercel.app/exhibition/${seq}`,
+            url : `https://exhibition.psh9321-portfolio.p-e.kr/exhibition/${seq}`,
             should_fallback : true,
             }
         },
