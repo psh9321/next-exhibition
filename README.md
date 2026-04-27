@@ -1,7 +1,7 @@
 # Discover Exhibitions 
 
 ## 전시정보를 제공하는 사이트 입니다.
-https://next-exhibition.vercel.app/
+https://exhibition.psh9321-portfolio.p-e.kr
 
 ## 개발 환경
  - node@24.12.0
