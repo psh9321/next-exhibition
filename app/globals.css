@@ -1,0 +1,117 @@
+@import "tailwindcss";
+@import "react-quill-new/dist/quill.snow.css";
+
+@theme {
+  --color-main-color : #7E4ED5;
+  --color-basic-color : #B6B5B8;
+
+  --color-border-color : #31333A;
+}
+
+body {
+  background-color: #11151E;
+}
+
+button {
+    cursor: pointer;
+}
+
+textarea {
+  resize: none !important;
+  outline: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  user-select: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.scrollbar::-webkit-scrollbar{
+  display: block;
+  width : 10px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-main-color);
+  border-radius: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: var(--color-basic-color);
+}
+
+
+/* react-quill */
+
+.quill,
+.ql-toolbar.ql-snow,
+.ql-editor, 
+.ql-blank,
+.ql-blank,
+.ql-container.ql-snow,
+.ql-toolbar {
+  border : none
+}
+
+/* .ql-editor {
+  font-size: 1.4rem;
+} */
+
+.metting-contents-quill,
+.metting-contents-quill .ql-container,
+.metting-contents-quill .ql-editor {
+  width: 100%;
+}
+
+.metting-contents-quill .ql-toolbar {
+  display: none;
+}
+
+.metting-contents-quill .ql-editor {
+  padding: 0 20px;
+  color: #fff;
+}
+
+
+.post-form-quill .ql-container {
+  border: none;
+}
+
+.post-form-quill .ql-editor {
+
+  max-height: 130px;
+  font-size: 1.2rem;
+  padding: 10px;
+  border: 1px solid var(--color-border-color);
+  border-radius: 5px;
+}
+
+.post-form-quill .ql-editor.ql-blank::before {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 0.8rem !important;
+  font-weight: 400;
+  font-style: normal;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(72%) sepia(5%) saturate(138%) hue-rotate(219deg) brightness(95%) contrast(88%);
+}
