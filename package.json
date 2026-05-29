@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
+    "prod" : "next start",
     "start" : "pm2 start ecosystem.config.js --env production",
     "reload" : "pm2 reload ecosystem.config.js",
     "build": "next build",
